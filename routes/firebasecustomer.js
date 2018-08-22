@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const firebaseCustomer = require('../controllers/firebaseCustomer');
-const firebaseAuthentication = require('../controllers/firebaseAuthentication');
 
 /*
 Customers

@@ -1,6 +1,6 @@
 var admin = require('firebase-admin');
 var serviceAccount = require('../keyfile.json');
-
+var moment = require('moment');
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
   databaseURL: process.env.DATABASEURL
@@ -19,7 +19,9 @@ class CustomerController {
       phoneNumber: req.body.phoneNumber,
       birthYear: req.body.birthYear,
       occupation: req.body.occupation,
-      restaurantId: req.body.restaurantId
+      restaurantId: req.body.restaurantId,
+      createdAt: moment().format('LLL'),
+      updatedAt: moment().format('LLL')
     }
     
     db
@@ -38,6 +40,7 @@ class CustomerController {
   static listCustomer (req, res) {
     db
       .collection('customers')
+      .where('restaurantId', '==', req.headers.uid)
       .get()
     
     .then((snapshot) => {
@@ -94,13 +97,23 @@ class CustomerController {
   }
 
   static updateCustomer (req, res) {
-    let customerData = req.body;
+    let customerData = {
+      name: req.body.name,
+      gender: req.body.gender,
+      email: req.body.email,
+      phoneNumber: req.body.phoneNumber,
+      birthYear: req.body.birthYear,
+      occupation: req.body.occupation,
+      restaurantId: req.body.restaurantId,
+      createdAt: req.body.createdAt,
+      updatedAt: moment().format('LLL')
+    }
     customerData.id = req.params.id;
 
     db
       .collection('customers')
       .doc(req.params.id)
-      .update(req.body)
+      .update(customerData)
 
     .then(result => {
       res
