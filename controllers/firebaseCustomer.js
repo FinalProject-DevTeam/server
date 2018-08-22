@@ -6,7 +6,7 @@ admin.initializeApp({
   databaseURL: process.env.DATABASEURL
 });
 
-var db = admin.firestore();
+var db = admin.firestore()
 const settings = {/* your settings... */ timestampsInSnapshots: true};
 db.settings(settings);
 
