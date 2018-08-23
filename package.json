@@ -12,6 +12,7 @@
     "axios": "^0.18.0",
     "cookie-parser": "~1.4.3",
     "cors": "^2.8.4",
+    "csv": "^3.1.0",
     "debug": "~2.6.9",
     "dotenv": "^6.0.0",
     "express": "~4.16.0",
@@ -21,8 +22,7 @@
     "jade": "~1.11.0",
     "mocha": "^5.2.0",
     "moment": "^2.22.2",
-    "morgan": "~1.9.0",
-    "unzip": "^0.1.11"
+    "morgan": "~1.9.0"
   },
   "devDependencies": {
     "chai": "^4.1.2",
