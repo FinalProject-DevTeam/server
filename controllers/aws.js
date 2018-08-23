@@ -17,14 +17,33 @@ class awsController {
     console.log('trainNewModel');
   }
 
-  static async createNewBatchPrediction(req, res) {
-    console.log('createNewBatchPrediction');
+  static createNewBatchPrediction(req, res) {
+    let params = {
+      // BatchPredictionDataSourceId: `${req.params.id}-customers`,
+      BatchPredictionDataSourceId: `ds-Jp5odzEcyyo`,
+      BatchPredictionId: `${req.params.id}-prediction`,
+      // MLModelId: `${req.params.id}-model`,
+      MLModelId: `ml-DO70VGo3UPt`,
+      OutputUri: `s3://aws-ml-tutorial-final-project-explore/`,
+      // BatchPredictionName: `${req.body.restaurantName} Prediction`,
+    }
+    machinelearning.createBatchPrediction(params, function (err, data) {
+      if (err) {
+        res
+          .status(400)
+          .json(err);
+      } else {
+        res
+          .status(200)
+          .json(data)
+      }
+    })
   }
 
-  static async getPrediction(req, res) {
+  static getPrediction(req, res) {
     let params = {
       Bucket: 'aws-ml-tutorial-final-project-explore',
-      Key: 'batch-prediction/result/bp-5NhckrSnBw0-customers.csv.gz'
+      Key: `batch-prediction/result/${req.params.id}-prediction.csv.gz`,
     }
     s3.getObject(params, function (err, data) {
       if (err) {
