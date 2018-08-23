@@ -1,5 +1,6 @@
 const AWS = require('aws-sdk');
 const fs = require('fs');
+const zlib = require('zlib');
 
 const customersDataSchema = require('../aws/schemas/customersDataSchema.json');
 const transactionsDataSchema = require('../aws/schemas/transactionsDataSchema.json');
@@ -19,7 +20,10 @@ class awsController {
   }
 
   static async getPrediction(req, res) {
-    console.log('getPrediction');
+    let params = {
+      Bucket: 'aws-ml-tutorial-final-project-explore',
+      Key: ''
+    }
   }
 }
 
