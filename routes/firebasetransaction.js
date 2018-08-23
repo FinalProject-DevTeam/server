@@ -7,4 +7,5 @@ router.get('/', firebaseTransaction.listTransactions);
 router.get('/:id', firebaseTransaction.specificTransaction)
 router.put('/:id', firebaseTransaction.updateTransaction)
 router.delete('/:id', firebaseTransaction.deleteTransaction)
+
 module.exports = router;

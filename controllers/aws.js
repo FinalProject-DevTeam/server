@@ -15,8 +15,12 @@ class awsController {
     console.log('trainNewModel');
   }
 
-  static async createNewBathPrediction(req, res) {
-    console.log('createNewBathPrediction');
+  static async createNewBatchPrediction(req, res) {
+    console.log('createNewBatchPrediction');
+  }
+
+  static async getPrediction(req, res) {
+    console.log('getPrediction');
   }
 }
 
