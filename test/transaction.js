@@ -100,7 +100,7 @@ describe('Transactions', function() {
       .send({
         restaurantId: "12345",
         customerId: "1234",
-        itemsOrdered: ['Hamburger', 'Indomie'],
+        itemsOrdered: ['Hainan Rice', 'Indomie'],
         createdAt: moment().format('LLL')
       })
       .end(function(error, res){
