@@ -6,7 +6,7 @@ admin.initializeApp({
   databaseURL: process.env.DATABASEURL
 });
 
-var db = admin.firestore()
+var db = admin.firestore();
 const settings = {/* your settings... */ timestampsInSnapshots: true};
 db.settings(settings);
 
@@ -114,24 +114,22 @@ class CustomerController {
       .collection('customers')
       .doc(req.params.id)
       .update(customerData)
-
-    .then(result => {
-      res
-        .status(200)
-        .json({
-          msg: "Data successfully updated",
-          data: customerData,
+      .then(result => {
+        res
+          .status(200)
+          .json({
+            msg: "Data successfully updated",
+            data: customerData,
+          })
+      })
+      .catch(err => {
+        res
+          .status(500)
+          .json({
+            msg: "Internal Server Error",
+            data: err.message,
         })
-    })
-
-    .catch(err => {
-      res
-        .status(500)
-        .json({
-          msg: "Internal Server Error",
-          data: err.message,
-        })
-    })
+      })
   }
 
   static deleteCustomer (req, res) {
