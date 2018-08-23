@@ -6,6 +6,7 @@ const should = chai.should();
 chai.use(chaiHttp)
 
 describe('Authentication', function() {
+  this.timeout(10000)
   it('should list all owners /authentication GET', function(done) {
     chai.request(server)
       .get('/authentication')
@@ -20,4 +21,16 @@ describe('Authentication', function() {
         done();
       });
   })
+
+  // it('should return 500 /authentication GET', function(done) {
+  //   chai.request(server)
+  //     .get('/authentication')
+  //     .end(function(err, res){
+  //       res.should.have.status(500);
+  //       res.body.should.be.a('object');
+  //       res.body.should.have.property('msg');
+  //       res.body.should.have.property('data');
+  //       done();
+  //     });
+  // })
 })
