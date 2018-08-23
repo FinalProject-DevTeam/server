@@ -32,7 +32,7 @@ describe('Transactions', function() {
         done();
       });
   });
-      
+
   it('should list all transactions with specific owner /transaction GET', function(done) {
     this.timeout(10000)
     chai.request(server)
@@ -122,7 +122,7 @@ describe('Transactions', function() {
       .send({
         restaurantId: "12345",
         customerId: "1234",
-        itemsOrdered: ['Hamburger', 'Indomie'],
+        itemsOrdered: ['French Fries', 'Indomie'],
         createdAt: moment().format('LLL')
       })
       .end(function(error, res){
