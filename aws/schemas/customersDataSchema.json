@@ -1,0 +1,19 @@
+{
+  "version" : "1.0",
+  "rowId" : null,
+  "rowWeight" : null,
+  "targetAttributeName" : null,
+  "dataFormat" : "CSV",
+  "dataFileContainsHeader" : true,
+  "attributes" : [ {
+    "attributeName" : "gender",
+    "attributeType" : "BINARY"
+  }, {
+    "attributeName" : "birthyear",
+    "attributeType" : "NUMERIC"
+  }, {
+    "attributeName" : "occupation",
+    "attributeType" : "CATEGORICAL"
+  } ],
+  "excludedAttributeNames" : [ ]
+}
