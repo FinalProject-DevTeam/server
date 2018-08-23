@@ -1,6 +1,6 @@
 const AWS = require('aws-sdk');
 const fs = require('fs');
-const zlib = require('zlib');
+const unzip = require('unzip');
 
 const customersDataSchema = require('../aws/schemas/customersDataSchema.json');
 const transactionsDataSchema = require('../aws/schemas/transactionsDataSchema.json');
