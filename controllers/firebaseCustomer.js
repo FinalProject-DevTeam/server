@@ -12,13 +12,34 @@ db.settings(settings);
 
 class CustomerController {
   static addCustomer (req, res) {
+    let binaryGender;
+
+    if (req.body.gender === "Male") {
+      binaryGender = 1;
+    }
+    else {
+      binaryGender = 0;
+    }
+
+    let newOccupation = '';
+    for (let i = 0; i < req.body.occupation.length; i++) {
+      if(req.body.occupation[i] === ' ') {
+        newOccupation += '.';
+      }
+      else {
+        newOccupation += req.body.occupation[i];
+      }
+    }
+
     let customerData = {
       name: req.body.name,
       gender: req.body.gender,
+      genderML: binaryGender,
       email: req.body.email,
       phoneNumber: req.body.phoneNumber,
       birthYear: req.body.birthYear,
       occupation: req.body.occupation,
+      occupationML: newOccupation,
       restaurantId: req.body.restaurantId,
       createdAt: moment().format('LLL'),
       updatedAt: moment().format('LLL')
