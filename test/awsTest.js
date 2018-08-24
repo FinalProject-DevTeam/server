@@ -73,10 +73,18 @@ describe('AWS', function () {
     chai.request(server)
       .post(`/aws/s3/52mSFsSFmRW4IRZr1i8acr6xWrv2`)
       .send({})
-    .end(function (err, res) {
-      res.should.have.status(400);
-      res.should.be.a('string');
+      .end(function (err, res) {
+        res.should.have.status(400);
+        res.should.be.a('string');
     });
+  });
+
+  it('should return 200 /aws/datasource/:id POST', function (done) {
+    chai.request(server)
+      .post(`/aws/datasource/52mSFsSFmRW4IRZr1i8acr6xWrv2`)
+      .end(function (err, res) {
+        res.should.have.status(200);
+      })
   })
 
 });
