@@ -7,7 +7,8 @@ const customersDataSchema = require('../aws/schemas/customersDataSchema.json');
 const transactionsDataSchema = require('../aws/schemas/transactionsDataSchema.json');
 
 const date = new Date();
-const today = date.getDate();
+const today = `${date.getDate()}${date.getMonth()}${date.getFullYear()}`;
+
 console.log(today);
 
 AWS.config.loadFromPath('./awsConfig.json');
@@ -34,6 +35,27 @@ class awsController {
         res
           .status(200)
           .json(data);
+      }
+    })
+  }
+
+  static createNewEvaluation(req, res) {
+    let params = {
+      EvaluationDataSourceId: `${today}-datasource`,
+      EvaluationId:`${today}-evaluation`,
+      MLModelId: `${today}-model`,
+      EvaluationName: `Evaluation: ${today}`
+    }
+
+    machinelearning.createEvaluation(params, function (err, data) {
+      if (err) {
+        res
+          .status(400)
+          .json(err)
+      } else {
+        res
+          .status
+          .json(data)
       }
     })
   }

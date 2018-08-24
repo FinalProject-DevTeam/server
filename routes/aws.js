@@ -10,6 +10,8 @@ router.post('/model', aws.trainNewModel);
 
 router.post('/s3', aws.uploadToS3);
 
+router.post('/evaluation', aws.createNewEvaluation);
+
 router.post('/datasource/', aws.createDataSource);
 
 router.delete('/datasource/:id', aws.deleteDataSource);
