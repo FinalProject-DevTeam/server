@@ -132,15 +132,38 @@ class awsController {
   static createDataSource(req, res) {
     let dataName = req.body.dataName;
     let folderName = req.body.folderName;
-    let awsS3location = `aws-ml-tutorial-final-project-explore/${folderName}/${req.params.id}-${dataName}.csv`
-    let schemaPath = `./aws/schemas/${folderName}Schema.json`
-    let params = {
-      DatasourceId: `${req.params.id}`,
-      DataSpec: {
-        DataLocationS3: filePath,
-        DataSchema
-      }
+    let awsS3location = `s3://aws-ml-tutorial-final-project-explore/${folderName}/${req.params.id}-${dataName}.csv`
+    let schemaPath = `../aws/schemas/${folderName}Schema.json`
+    let schema = require(schemaPath);
+    var computeStatisticsBool;
+
+    if (dataName === 'transactions-data') {
+      computeStatisticsBool = true;
+    } else {
+      computeStatisticsBool = false;
     }
+
+    let params = {
+      DataSourceId: `${req.params.id}`,
+      DataSpec: {
+        DataLocationS3: awsS3location,
+        DataSchema: JSON.stringify(schema),
+      },
+      ComputeStatistics: computeStatisticsBool,
+      DataSourceName: ` ${dataName}: ${req.params.id}`,
+    }
+
+    machinelearning.createDataSourceFromS3(params, function (err, data) {
+      if (err) {
+        res
+          .status(400)
+          .json(err);
+      } else {
+        res
+          .status(200)
+          .json(data)
+      }
+    })
   }
 }
 
