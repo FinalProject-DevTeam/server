@@ -1,0 +1,22 @@
+{
+  "version" : "1.0",
+  "rowId" : null,
+  "rowWeight" : null,
+  "targetAttributeName" : "ordered_item",
+  "dataFormat" : "CSV",
+  "dataFileContainsHeader" : true,
+  "attributes" : [ {
+    "attributeName" : "gender",
+    "attributeType" : "BINARY"
+  }, {
+    "attributeName" : "birthyear",
+    "attributeType" : "NUMERIC"
+  }, {
+    "attributeName" : "occupation",
+    "attributeType" : "CATEGORICAL"
+  }, {
+    "attributeName" : "ordered_item",
+    "attributeType" : "CATEGORICAL"
+  } ],
+  "excludedAttributeNames" : [ ]
+}
