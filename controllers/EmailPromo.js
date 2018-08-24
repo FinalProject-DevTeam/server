@@ -3,8 +3,9 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 module.exports = {
 sendEmail: function(req, res){
+  console.log(req.body)
   const msg = {
-    to:req.body.receiver, //array email
+    to:req.body.receiver,
     from: req.body.owneremail,
     subject:req.body.subject,
     text: 'text',
