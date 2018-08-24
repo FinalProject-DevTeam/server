@@ -10,4 +10,6 @@ router.post('/model/:id', aws.trainNewModel);
 
 router.post('/s3/:id', aws.uploadToS3);
 
+router.post('/datasource/:id', aws.createDataSource);
+
 module.exports = router;

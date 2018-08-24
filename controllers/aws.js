@@ -24,7 +24,7 @@ class awsController {
       // MLModelId: `${req.params.id}-model`,
       MLModelId: `ml-DO70VGo3UPt`,
       OutputUri: `s3://aws-ml-tutorial-final-project-explore/`,
-      // BatchPredictionName: `${req.body.restaurantName} Prediction`,
+      BatchPredictionName: `Batch prediction: ${req.params.id}`,
     }
     machinelearning.createBatchPrediction(params, function (err, data) {
       if (err) {
@@ -99,6 +99,7 @@ class awsController {
               .json(err)
           } else {
             fs.readFile(filePath, (err, data) => {
+              let newData = new Buffer(data, 'binary');
               if (err) {
                 res
                   .status(400)
@@ -107,7 +108,7 @@ class awsController {
                 let params = {
                   Bucket: 'aws-ml-tutorial-final-project-explore',
                   Key: `${folderName}/${req.params.id}-${dataName}.csv`,
-                  Body: JSON.stringify(data, null, 2),
+                  Body: newData,
                 }
                 s3.upload(params, function (err, data) {
                   if (err) {
@@ -126,6 +127,10 @@ class awsController {
         })
       }
     });
+  }
+
+  static createDataSource(req, res) {
+
   }
 }
 
