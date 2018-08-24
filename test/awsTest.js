@@ -41,6 +41,39 @@ describe('AWS', function () {
     });
   });
 
+  it('should return 200 /aws/predictionstatus/:id GET', function (done) {
+    chai.request(server)
+      .get(`/aws/predictionstatus/${req.params.id}`)
+      .end(function (err, res) {
+        res.should.have.status(200)
+        res.should.be.a('json');
+      });
+  })
+
+  it('should return 400 /aws/predictionstatus/:id GET', function (done) {
+    chai.request(server)
+      .get(`/aws/predictionstatus/dnsjnadsnas`)
+      .end(function (err, res) {
+        res.should.have.status(400)
+      });
+  })
+
+  it('should return 400 /aws/prediction DELETE', function (done) {
+    chai.request(server)
+      .delete('/aws/prediction/sdadssadasd')
+      .end(function (err, res) {
+        res.should.have.status(400)
+      })
+  })
+
+  it('should return 200 /aws/prediction POST', function (done) {
+    chai.request(server)
+      .post('/aws/prediction/52mSFsSFmRW4IRZr1i8acr6xWrv2')
+      .end(function (err, res) {
+        res.should.have.status(200)
+      })
+  })
+
   it('should return 200 /aws/model POST', function (done) {
     chai.request(server)
       .post(`/aws/model`)
@@ -49,6 +82,39 @@ describe('AWS', function () {
       done();
     });
   });
+
+  it('should return 200 /aws/model DELETE', function (done) {
+    chai.request(server)
+      .delete('/aws/model/01022018')
+      .end(function (err, res) {
+        res.should.have.status(200);
+      })
+  })
+
+  it('should return 400 /aws/model DELETE', function (done) {
+    chai.request(server)
+      .delete('/aws/model/')
+      .end(function (err, res) {
+        res.should.have.status(400);
+      })
+  })
+
+  it(`should return 200 /aws/model GET`, function (done) {
+    chai.request(server)
+      .get('/aws/model/01022018')
+      .end(function (err, res) {
+        res.should.have.status(200)
+        res.should.be.a('json')
+      });
+  })
+
+  it('should return 400 /aws/model GET', function (done) {
+    chai.request(server)
+      .get('/aws/model/ ')
+      .end(function (err, res) {
+        res.should.have.status(400);
+      });
+  })
 
   it('should return string and status 200 /aws/s3 POST', function (done) {
     chai.request(server)
@@ -92,7 +158,7 @@ describe('AWS', function () {
       })
       .end(function (err, res) {
         res.should.have.status(200);
-      })
+      });
   })
 
   it('should return 200 /aws/datasource POST', function (done) {
@@ -105,7 +171,7 @@ describe('AWS', function () {
       })
       .end(function (err, res) {
         res.should.have.status(200);
-      })
+      });
   })
 
   it('should return 400 /aws/datasource POST', function (done) {
@@ -113,7 +179,7 @@ describe('AWS', function () {
       .post(`/aws/datasource/`)
       .end(function (err, res) {
         res.should.have.status(200);
-      })
+      });
   })
 
   it(`should return 200 /aws/datasource DELETE`, function (done) {
@@ -121,7 +187,7 @@ describe('AWS', function () {
       .delete(`/aws/datasource/52mSFsSFmRW4IRZr1i8acr6xWrv2`)
       .end(function (err, res) {
         res.should.have.status(200);
-      })
+      });
   })
 
   it(`should return 400 /aws/datasource DELETE`, function (done) {
@@ -129,16 +195,68 @@ describe('AWS', function () {
       .delete(`/aws/datasource/dsnsadnjnsadjnnjdsa`)
       .end(function (err, res) {
         res.should.have.status(400);
-      })
+      });
   })
 
   it('should return 200 /aws/evaluation POST', function (done) {
     chai.request(server)
-      .delete('/aws/evaluation')
+      .post('/aws/evaluation')
       .end(function (err, res) {
         res.should.have.status(200)
         res.should.be.a('string')
-      })
+      });
+  })
+
+  it('should return 200 /aws/evaluation DELETE', function (done) {
+    chai.request(server)
+      .delete(`/aws/evaluation/${today}`)
+      .end(function (err, res) {
+        res.should.have.status(200)
+        res.should.be.a('string')
+      });
+  })
+
+  it('should return 400 /aws/evaluation DELETE', function (done) {
+    chai.request(server)
+      .delete(`/aws/evaluation/msdmadsmdasmas`)
+      .end(function (err, res) {
+        res.should.have.status(400)
+        res.should.be.a('string')
+      });
+  })
+
+  it('should return 200 /aws/datasource GET', function (done) {
+    chai.request(server)
+      .get('/aws/datasource/52mSFsSFmRW4IRZr1i8acr6xWrv2')
+      .end(function (err, res) {
+        res.should.have.status(200)
+        res.should.be.a('json')
+      });
+  })
+
+  it('should return 400 /aws/datasource GET', function (done) {
+    chai.request(server)
+      .get('/aws/datasource/ndssand')
+      .end(function (err, res) {
+        res.should.have.status(400)
+      });
+  })
+
+  it('should return 200 /aws/evaluation GET', function (done) {
+    chai.request(server)
+      .get('/aws/evaluation/52mSFsSFmRW4IRZr1i8acr6xWrv2')
+      .end(function (err, res) {
+        res.should.have.status(200)
+        res.should.be.a('json')
+      });
+  })
+
+  it('should return 400 /aws/evaluation GET', function (done) {
+    chai.request(server)
+      .get('/aws/evaluation/ndssand')
+      .end(function (err, res) {
+        res.should.have.status(400)
+      });
   })
 
 });
