@@ -33,7 +33,7 @@ describe('AWS', function () {
 
   it('should return 400 /aws/prediction/:id POST', function (done) {
     chai.request(server)
-      .post(`/aws/prediction`)
+      .post(`/aws/prediction/bshbhsb`)
       .end(function (err, res) {
         res.should.have.status(404);
         res.should.be.a('json')
@@ -62,7 +62,7 @@ describe('AWS', function () {
     chai.request(server)
       .delete('/aws/prediction/sdadssadasd')
       .end(function (err, res) {
-        res.should.have.status(400)
+        res.should.have.status(404)
       })
   })
 
@@ -95,7 +95,7 @@ describe('AWS', function () {
     chai.request(server)
       .delete('/aws/model/')
       .end(function (err, res) {
-        res.should.have.status(400);
+        res.should.have.status(404);
       })
   })
 
@@ -207,7 +207,7 @@ describe('AWS', function () {
       });
   })
 
-  it('should return 200 /aws/evaluation DELETE', function (done) {
+  it('should return 200 /aws/tion DELETE', function (done) {
     chai.request(server)
       .delete(`/aws/evaluation/${today}`)
       .end(function (err, res) {
@@ -242,7 +242,7 @@ describe('AWS', function () {
       });
   })
 
-  it('should return 200 /aws/evaluation GET', function (done) {
+  it('should return 200 /aws/evaluation/:id GET', function (done) {
     chai.request(server)
       .get('/aws/evaluation/52mSFsSFmRW4IRZr1i8acr6xWrv2')
       .end(function (err, res) {
@@ -251,11 +251,11 @@ describe('AWS', function () {
       });
   })
 
-  it('should return 400 /aws/evaluation GET', function (done) {
+  it('should return 400 /aws/evaluation/:id GET', function (done) {
     chai.request(server)
       .get('/aws/evaluation/ndssand')
       .end(function (err, res) {
-        res.should.have.status(400)
+        res.should.have.status(404)
       });
   })
 
