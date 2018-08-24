@@ -345,6 +345,24 @@ class awsController {
     })
   }
 
+  static getDataSourceStatus(req, res) {
+    let params = {
+      DataSourceId: `${req.params.id}-datasource`
+    }
+
+    machinelearning.getDataSource(params, function (err, data) {
+      if (err) {
+        res
+          .status(400)
+          .json(err)
+      } else {
+        res
+          .status(200)
+          .json(data.Status)
+      }
+    });
+  }
+
 }
 
  module.exports = awsController;

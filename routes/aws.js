@@ -26,4 +26,6 @@ router.post('/datasource/', aws.createDataSource);
 
 router.delete('/datasource/:id', aws.deleteDataSource);
 
+router.get('/datasource/:id', aws.getDataSourceStatus)
+
 module.exports = router;

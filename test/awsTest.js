@@ -158,7 +158,7 @@ describe('AWS', function () {
       })
       .end(function (err, res) {
         res.should.have.status(200);
-      })
+      });
   })
 
   it('should return 200 /aws/datasource POST', function (done) {
@@ -171,7 +171,7 @@ describe('AWS', function () {
       })
       .end(function (err, res) {
         res.should.have.status(200);
-      })
+      });
   })
 
   it('should return 400 /aws/datasource POST', function (done) {
@@ -179,7 +179,7 @@ describe('AWS', function () {
       .post(`/aws/datasource/`)
       .end(function (err, res) {
         res.should.have.status(200);
-      })
+      });
   })
 
   it(`should return 200 /aws/datasource DELETE`, function (done) {
@@ -187,7 +187,7 @@ describe('AWS', function () {
       .delete(`/aws/datasource/52mSFsSFmRW4IRZr1i8acr6xWrv2`)
       .end(function (err, res) {
         res.should.have.status(200);
-      })
+      });
   })
 
   it(`should return 400 /aws/datasource DELETE`, function (done) {
@@ -195,7 +195,7 @@ describe('AWS', function () {
       .delete(`/aws/datasource/dsnsadnjnsadjnnjdsa`)
       .end(function (err, res) {
         res.should.have.status(400);
-      })
+      });
   })
 
   it('should return 200 /aws/evaluation POST', function (done) {
@@ -204,7 +204,7 @@ describe('AWS', function () {
       .end(function (err, res) {
         res.should.have.status(200)
         res.should.be.a('string')
-      })
+      });
   })
 
   it('should return 200 /aws/evaluation DELETE', function (done) {
@@ -213,7 +213,7 @@ describe('AWS', function () {
       .end(function (err, res) {
         res.should.have.status(200)
         res.should.be.a('string')
-      })
+      });
   })
 
   it('should return 400 /aws/evaluation DELETE', function (done) {
@@ -222,7 +222,24 @@ describe('AWS', function () {
       .end(function (err, res) {
         res.should.have.status(400)
         res.should.be.a('string')
-      })
+      });
+  })
+
+  it('should return 200 /aws/datasource GET', function (done) {
+    chai.request(server)
+      .get('/aws/datasource/52mSFsSFmRW4IRZr1i8acr6xWrv2')
+      .end(function (err, res) {
+        res.should.have.status(200)
+        res.should.be.a('json')
+      });
+  })
+
+  it('should return 400 /aws/datasource GET', function (done) {
+    chai.request(server)
+      .get('/aws/datasource/ndssand')
+      .end(function (err, res) {
+        res.should.have.status(400)
+      });
   })
 
 });
