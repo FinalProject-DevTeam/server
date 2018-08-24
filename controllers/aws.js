@@ -84,6 +84,7 @@ class awsController {
     let dataName = req.body.dataName;
     let folderName = req.body.folderName;
     let columns = req.body.columns;
+    let filePath = `./aws/${folderName}/${req.params.id}-${dataName}.csv`
 
     stringify(arrData, { header: true, columns: columns }, function (err, output) {
       if (err) {
@@ -91,15 +92,36 @@ class awsController {
           .status(400)
           .json(err)
       } else {
-        fs.writeFile(`./aws/${folderName}/${req.params.id}-${dataName}.csv`, output, err => {
+        fs.writeFile(filePath, output, err => {
           if (err) {
             res
               .status(400)
               .json(err)
           } else {
-            res
-              .status(200)
-              .json(output)
+            fs.readFile(filePath, (err, data) => {
+              if (err) {
+                res
+                  .status(400)
+                  .json(err)
+              } else {
+                let params = {
+                  Bucket: 'aws-ml-tutorial-final-project-explore',
+                  Key: `${folderName}/${req.params.id}-${dataName}.csv`,
+                  Body: JSON.stringify(data, null, 2),
+                }
+                s3.upload(params, function (err, data) {
+                  if (err) {
+                    res
+                      .status(400)
+                      .json(err)
+                  } else {
+                    res
+                      .status(200)
+                      .json(data)
+                  }
+                })
+              }
+            })
           }
         })
       }
