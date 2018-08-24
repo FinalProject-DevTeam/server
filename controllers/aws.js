@@ -80,7 +80,30 @@ class awsController {
   }
 
   static uploadToS3(req, res) {
-    imp
+    let arrData = req.body.arrData;
+    let dataName = req.body.dataName;
+    let folderName = req.body.folderName;
+    let columns = req.body.columns;
+
+    stringify(arrData, { header: true, columns: columns }, function (err, output) {
+      if (err) {
+        res
+          .status(400)
+          .json(err)
+      } else {
+        fs.writeFile(`./aws/${folderName}/${req.params.id}-${dataName}.csv`, output, err => {
+          if (err) {
+            res
+              .status(400)
+              .json(err)
+          } else {
+            res
+              .status(200)
+              .json(output)
+          }
+        })
+      }
+    });
   }
 }
 

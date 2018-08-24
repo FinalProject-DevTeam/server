@@ -41,15 +41,17 @@ describe('AWS', function () {
     chai.request(server)
       .post(`/aws/model/52mSFsSFmRW4IRZr1i8acr6xWrv2`)
       .send({
-        columns: {
-          gender: 'gender',
-          birthYear: 'birthYear',
-          occupation: 'occupation',
+        "columns": {
+          "gender": "gender",
+          "birthYear": "birthyear",
+          "occupation": "occupation"
         },
-        csvData: [
-          [1, 2000, 'Teacher'],
-          [0, 1980, 'Student'],
-        ]
+        "arrData": [
+          [1, 2000, "Teacher"],
+          [0, 1980, "Student"]
+        ],
+        "folderName": "customersData",
+        "dataName": "customers-data"
       })
     .end(function (err, res) {
       res.should.have.status(200);
