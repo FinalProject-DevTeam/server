@@ -20,7 +20,7 @@ class awsController {
     let params = {
       // BatchPredictionDataSourceId: `${req.params.id}-customers`,
       BatchPredictionDataSourceId: `ds-Jp5odzEcyyo`,
-      BatchPredictionId: `${req.params.id}-prediction`,
+      BatchPredictionId: `${req.params.id}`,
       // MLModelId: `${req.params.id}-model`,
       MLModelId: `ml-DO70VGo3UPt`,
       OutputUri: `s3://aws-ml-tutorial-final-project-explore/`,
@@ -130,7 +130,17 @@ class awsController {
   }
 
   static createDataSource(req, res) {
-
+    let dataName = req.body.dataName;
+    let folderName = req.body.folderName;
+    let awsS3location = `aws-ml-tutorial-final-project-explore/${folderName}/${req.params.id}-${dataName}.csv`
+    let schemaPath = `./aws/schemas/${folderName}Schema.json`
+    let params = {
+      DatasourceId: `${req.params.id}`,
+      DataSpec: {
+        DataLocationS3: filePath,
+        DataSchema
+      }
+    }
   }
 }
 
