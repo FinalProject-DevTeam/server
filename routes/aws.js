@@ -4,6 +4,8 @@ const aws = require('../controllers/aws');
 
 router.get('/prediction/:id', aws.getPrediction);
 
+router.get('/predictionstatus/:id', aws.getPredictionStatus)
+
 router.post('/prediction/:id', aws.createNewBatchPrediction);
 
 router.delete('/prediction/:id', aws.deleteBatchPrediction);

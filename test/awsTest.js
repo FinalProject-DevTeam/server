@@ -41,6 +41,23 @@ describe('AWS', function () {
     });
   });
 
+  it('should return 200 /aws/predictionstatus/:id GET', function (done) {
+    chai.request(server)
+      .get(`/aws/predictionstatus/${req.params.id}`)
+      .end(function (err, res) {
+        res.should.have.status(200)
+        res.should.be.a('json');
+      });
+  })
+
+  it('should return 400 /aws/predictionstatus/:id GET', function (done) {
+    chai.request(server)
+      .get(`/aws/predictionstatus/dnsjnadsnas`)
+      .end(function (err, res) {
+        res.should.have.status(400)
+      });
+  })
+
   it('should return 400 /aws/prediction DELETE', function (done) {
     chai.request(server)
       .delete('/aws/prediction/sdadssadasd')

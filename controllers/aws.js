@@ -194,6 +194,24 @@ class awsController {
     })
   }
 
+  static getPredictionStatus(req, res) {
+    let params = {
+      BatchPredictionId: `${req.params.id}-prediction`,
+    }
+
+    machinelearning.getBatchPrediction(params, function (err, data) {
+      if (err) {
+        res
+          .status(400)
+          .json(err)
+      } else {
+        res
+          .status(200)
+          .json(data.Status);
+      }
+    })
+  }
+
   static uploadToS3(req, res) {
     let arrData = req.body.arrData;
     let dataName = req.body.dataName;
