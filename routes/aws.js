@@ -6,6 +6,8 @@ router.get('/prediction/:id', aws.getPrediction);
 
 router.post('/prediction/:id', aws.createNewBatchPrediction);
 
+router.delete('/prediction/:id', aws.deleteBatchPrediction);
+
 router.post('/model', aws.trainNewModel);
 
 router.post('/s3', aws.uploadToS3);

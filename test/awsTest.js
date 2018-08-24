@@ -41,6 +41,22 @@ describe('AWS', function () {
     });
   });
 
+  it('should return 400 /aws/prediction DELETE', function (done) {
+    chai.request(server)
+      .delete('/aws/prediction/sdadssadasd')
+      .end(function (err, res) {
+        res.should.have.status(400)
+      })
+  })
+
+  it('should return 200 /aws/prediction POST', function (done) {
+    chai.request(server)
+      .post('/aws/prediction/52mSFsSFmRW4IRZr1i8acr6xWrv2')
+      .end(function (err, res) {
+        res.should.have.status(200)
+      })
+  })
+
   it('should return 200 /aws/model POST', function (done) {
     chai.request(server)
       .post(`/aws/model`)

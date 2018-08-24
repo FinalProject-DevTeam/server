@@ -9,7 +9,7 @@ const transactionsDataSchema = require('../aws/schemas/transactionsDataSchema.js
 const date = new Date();
 const today = `${date.getDate()}${date.getMonth()}${date.getFullYear()}`;
 
-console.log(today);
+// console.log(today);
 
 AWS.config.loadFromPath('./awsConfig.json');
 
@@ -243,6 +243,24 @@ class awsController {
       DataSourceId: `${req.params.id}-datasource`,
     }
     machinelearning.deleteDataSource(params, function (err, data) {
+      if (err) {
+        res
+          .status(400)
+          .json(err);
+      } else {
+        res
+          .status(200)
+          .json(data);
+      }
+    })
+  }
+
+  static deleteBatchPrediction(req, res) {
+    let params = {
+      BatchPredictionId: `${req.params.id}-prediction`,
+    }
+
+    machinelearning.deleteBatchPrediction(params, function (err, data) {
       if (err) {
         res
           .status(400)
