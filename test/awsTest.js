@@ -66,6 +66,22 @@ describe('AWS', function () {
     });
   });
 
+  it('should return 200 /aws/model DELETE', function (done) {
+    chai.request(server)
+      .delete('/aws/model/01022018')
+      .end(function (err, res) {
+        res.shoul.have.status(200);
+      })
+  })
+
+  it('should return 400 /aws/model DELETE', function (done) {
+    chai.request(server)
+      .delete('/aws/model/')
+      .end(function (err, res) {
+        res.shoul.have.status(400);
+      })
+  })
+
   it('should return string and status 200 /aws/s3 POST', function (done) {
     chai.request(server)
       .post(`/aws/s3`)

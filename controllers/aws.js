@@ -39,6 +39,24 @@ class awsController {
     })
   }
 
+  static deleteModel(req, res) {
+    let params = {
+      MLModelId: `${req.params.id}-model`
+    }
+
+    machinelearning.deleteMLModel(params, function (err, data) {
+      if (err) {
+        res
+          .status(400)
+          .json(err);
+      } else {
+        res
+          .status(200)
+          .json(data);
+      }
+    })
+  }
+
   static createNewEvaluation(req, res) {
     let params = {
       EvaluationDataSourceId: `${today}-datasource`,

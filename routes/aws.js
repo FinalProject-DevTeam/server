@@ -10,6 +10,8 @@ router.delete('/prediction/:id', aws.deleteBatchPrediction);
 
 router.post('/model', aws.trainNewModel);
 
+router.delete('/model/:id', aws.deleteModel);
+
 router.post('/s3', aws.uploadToS3);
 
 router.post('/evaluation', aws.createNewEvaluation);
