@@ -1,8 +1,7 @@
 const AWS = require('aws-sdk');
 const fs = require('fs');
 const zlib = require('zlib');
-const csv = require('csv');
-let parse = csv.parse;
+const { stringify, parse } = require('csv');
 
 const customersDataSchema = require('../aws/schemas/customersDataSchema.json');
 const transactionsDataSchema = require('../aws/schemas/transactionsDataSchema.json');
@@ -21,11 +20,11 @@ class awsController {
     let params = {
       // BatchPredictionDataSourceId: `${req.params.id}-customers`,
       BatchPredictionDataSourceId: `ds-Jp5odzEcyyo`,
-      BatchPredictionId: `${req.params.id}-prediction`,
+      BatchPredictionId: `${req.params.id}`,
       // MLModelId: `${req.params.id}-model`,
       MLModelId: `ml-DO70VGo3UPt`,
       OutputUri: `s3://aws-ml-tutorial-final-project-explore/`,
-      // BatchPredictionName: `${req.body.restaurantName} Prediction`,
+      BatchPredictionName: `Batch prediction: ${req.params.id}`,
     }
     machinelearning.createBatchPrediction(params, function (err, data) {
       if (err) {
@@ -78,6 +77,93 @@ class awsController {
         })
       }
     });
+  }
+
+  static uploadToS3(req, res) {
+    let arrData = req.body.arrData;
+    let dataName = req.body.dataName;
+    let folderName = req.body.folderName;
+    let columns = req.body.columns;
+    let filePath = `./aws/${folderName}/${req.params.id}-${dataName}.csv`
+
+    stringify(arrData, { header: true, columns: columns }, function (err, output) {
+      if (err) {
+        res
+          .status(400)
+          .json(err)
+      } else {
+        fs.writeFile(filePath, output, err => {
+          if (err) {
+            res
+              .status(400)
+              .json(err)
+          } else {
+            fs.readFile(filePath, (err, data) => {
+              let newData = new Buffer(data, 'binary');
+              if (err) {
+                res
+                  .status(400)
+                  .json(err)
+              } else {
+                let params = {
+                  Bucket: 'aws-ml-tutorial-final-project-explore',
+                  Key: `${folderName}/${req.params.id}-${dataName}.csv`,
+                  Body: newData,
+                }
+                s3.upload(params, function (err, data) {
+                  if (err) {
+                    res
+                      .status(400)
+                      .json(err)
+                  } else {
+                    res
+                      .status(200)
+                      .json(data)
+                  }
+                })
+              }
+            })
+          }
+        })
+      }
+    });
+  }
+
+  static createDataSource(req, res) {
+    let dataName = req.body.dataName;
+    let folderName = req.body.folderName;
+    let awsS3location = `s3://aws-ml-tutorial-final-project-explore/${folderName}/${req.params.id}-${dataName}.csv`
+    let schemaPath = `../aws/schemas/${folderName}Schema.json`
+    let schema = require(schemaPath);
+    var computeStatisticsBool;
+
+    if (dataName === 'transactions-data') {
+      computeStatisticsBool = true;
+    } else {
+      computeStatisticsBool = false;
+    }
+
+    let params = {
+      DataSourceId: `${req.params.id}`,
+      DataSpec: {
+        DataLocationS3: awsS3location,
+        DataSchema: JSON.stringify(schema),
+      },
+      ComputeStatistics: computeStatisticsBool,
+      DataSourceName: ` ${dataName}: ${req.params.id}`,
+    }
+
+    machinelearning.createDataSourceFromS3(params, function (err, data) {
+      if (err) {
+        res
+          .status(400)
+          .json(err);
+      } else {
+        res
+          .status(200)
+          .json(data)
+      }
+    })
   }
 }
 
