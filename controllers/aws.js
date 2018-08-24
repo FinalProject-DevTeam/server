@@ -20,7 +20,7 @@ class awsController {
     let params = {
       // BatchPredictionDataSourceId: `${req.params.id}-customers`,
       BatchPredictionDataSourceId: `ds-Jp5odzEcyyo`,
-      BatchPredictionId: `${req.params.id}`,
+      BatchPredictionId: `${req.params.id}-prediction`,
       // MLModelId: `${req.params.id}-model`,
       MLModelId: `ml-DO70VGo3UPt`,
       OutputUri: `s3://aws-ml-tutorial-final-project-explore/`,
@@ -143,7 +143,7 @@ class awsController {
     }
 
     let params = {
-      DataSourceId: `${req.params.id}`,
+      DataSourceId: `${req.params.id}-datasource`,
       DataSpec: {
         DataLocationS3: awsS3location,
         DataSchema: JSON.stringify(schema),
@@ -167,7 +167,7 @@ class awsController {
 
   static deleteDataSource(req, res) {
     let params = {
-      DataSourceId: req.params.id,
+      DataSourceId: `${req.params.id}-datasource`,
     }
     machinelearning.deleteDataSource(params, function (err, data) {
       if (err) {
