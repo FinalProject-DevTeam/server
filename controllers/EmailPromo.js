@@ -5,10 +5,10 @@ module.exports = {
 sendEmail: function(req, res){
   const msg = {
     to:['handimacbook@gmail.com'],
-    from: 'Hacktiv8 Admission <contact@hacktiv8.com>',
+    from: req.body.owneremail,
     subject:req.body.subject,
     text: 'text',
-    html:req.body.html
+    html:req.body.content
      };
 
   sgMail.sendMultiple(msg)
