@@ -8,9 +8,9 @@ router.post('/prediction/:id', aws.createNewBatchPrediction);
 
 router.post('/model', aws.trainNewModel);
 
-router.post('/s3/:id', aws.uploadToS3);
+router.post('/s3', aws.uploadToS3);
 
-router.post('/datasource/:id', aws.createDataSource);
+router.post('/datasource/', aws.createDataSource);
 
 router.delete('/datasource/:id', aws.deleteDataSource);
 

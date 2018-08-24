@@ -80,7 +80,7 @@ class awsController {
               for (let i = 1; i < output.length; i++) {
                 let processedRow = [];
                 let currentRow = output[i];
-                for (var j = 0; j < currentRow.length; j++) {
+                for (let j = 0; j < currentRow.length; j++) {
                   let processedDatum = Number(currentRow[j].slice(0, 1));
                   processedRow.push(processedDatum);
                 }
@@ -105,7 +105,14 @@ class awsController {
     let dataName = req.body.dataName;
     let folderName = req.body.folderName;
     let columns = req.body.columns;
-    let filePath = `./aws/${folderName}/${req.params.id}-${dataName}.csv`
+    let id = req.body.id
+    let filePath;
+
+    if (dataName === 'transactions-data') {
+      filePath = `./aws/${folderName}/${today}-${dataName}.csv`
+    } else {
+      filePath = `./aws/${folderName}/${id}-${dataName}.csv`
+    }
 
     stringify(arrData, { header: true, columns: columns }, function (err, output) {
       if (err) {
@@ -126,10 +133,20 @@ class awsController {
                   .status(400)
                   .json(err)
               } else {
-                let params = {
-                  Bucket: 'aws-ml-tutorial-final-project-explore',
-                  Key: `${folderName}/${req.params.id}-${dataName}.csv`,
-                  Body: newData,
+                let params;
+
+                if (dataName === 'transactions-data') {
+                  params = {
+                    Bucket: 'aws-ml-tutorial-final-project-explore',
+                    Key: `${folderName}/${today}-${dataName}.csv`,
+                    Body: newData,
+                  }
+                } else {
+                  params = {
+                    Bucket: 'aws-ml-tutorial-final-project-explore',
+                    Key: `${folderName}/${id}-${dataName}.csv`,
+                    Body: newData,
+                  }
                 }
                 s3.upload(params, function (err, data) {
                   if (err) {
@@ -153,13 +170,15 @@ class awsController {
   static createDataSource(req, res) {
     let dataName = req.body.dataName;
     let folderName = req.body.folderName;
-    let awsS3location = `s3://aws-ml-tutorial-final-project-explore/${folderName}/${req.params.id}-${dataName}.csv`
+    let id = req.body.id;
     let schemaPath = `../aws/schemas/${folderName}Schema.json`
     let schema = require(schemaPath);
-    var computeStatisticsBool;
-    var params;
+    let computeStatisticsBool;
+    let params;
+    let awsS3location;
 
     if (dataName === 'transactions-data') {
+      awsS3location = `s3://aws-ml-tutorial-final-project-explore/${folderName}/${today}-${dataName}.csv`
       computeStatisticsBool = true;
       params = {
         DataSourceId: `${today}-datasource`,
@@ -168,12 +187,13 @@ class awsController {
           DataSchema: JSON.stringify(schema),
         },
         ComputeStatistics: computeStatisticsBool,
-        DataSourceName: ` ${dataName}: ${req.params.id}`,
+        DataSourceName: ` ${dataName}: ${today}`,
       }
     } else {
       computeStatisticsBool = false;
+      awsS3location = `s3://aws-ml-tutorial-final-project-explore/${folderName}/${id}-${dataName}.csv`
       params = {
-        DataSourceId: `${req.params.id}-datasource`,
+        DataSourceId: `${id}-datasource`,
         DataSpec: {
           DataLocationS3: awsS3location,
           DataSchema: JSON.stringify(schema),
@@ -182,14 +202,6 @@ class awsController {
         DataSourceName: ` ${dataName}: ${req.params.id}`,
       }
     }
-
-    if (dataName === 'transactions-data') {
-
-    } else {
-
-    }
-
-
 
     machinelearning.createDataSourceFromS3(params, function (err, data) {
       if (err) {
