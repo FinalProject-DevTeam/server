@@ -150,9 +150,27 @@ describe('AWS', function () {
 
   it('should return 200 /aws/evaluation POST', function (done) {
     chai.request(server)
-      .delete('/aws/evaluation')
+      .post('/aws/evaluation')
       .end(function (err, res) {
         res.should.have.status(200)
+        res.should.be.a('string')
+      })
+  })
+
+  it('should return 200 /aws/evaluation DELETE', function (done) {
+    chai.request(server)
+      .delete(`/aws/evaluation/${today}`)
+      .end(function (err, res) {
+        res.should.have.status(200)
+        res.should.be.a('string')
+      })
+  })
+
+  it('should return 400 /aws/evaluation DELETE', function (done) {
+    chai.request(server)
+      .delete(`/aws/evaluation/msdmadsmdasmas`)
+      .end(function (err, res) {
+        res.should.have.status(400)
         res.should.be.a('string')
       })
   })

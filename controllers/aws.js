@@ -60,6 +60,24 @@ class awsController {
     })
   }
 
+  static deleteEvaluation(req, res) {
+    let params = {
+      EvaluationId:`${req.params.id}-evaluation`,
+    }
+
+    machinelearning.deleteEvaluation(params, function (err, data) {
+      if (err) {
+        res
+          .status(400)
+          .json(err);
+      } else {
+        res
+          .status(200)
+          .json(data);
+      }
+    })
+  }
+
   static createNewBatchPrediction(req, res) {
     let params = {
       // BatchPredictionDataSourceId: `${req.params.id}-customers`,
@@ -120,6 +138,24 @@ class awsController {
         })
       }
     });
+  }
+
+  static deleteBatchPrediction(req, res) {
+    let params = {
+      BatchPredictionId: `${req.params.id}-prediction`,
+    }
+
+    machinelearning.deleteBatchPrediction(params, function (err, data) {
+      if (err) {
+        res
+        .status(400)
+        .json(err);
+      } else {
+        res
+        .status(200)
+        .json(data);
+      }
+    })
   }
 
   static uploadToS3(req, res) {
@@ -255,23 +291,6 @@ class awsController {
     })
   }
 
-  static deleteBatchPrediction(req, res) {
-    let params = {
-      BatchPredictionId: `${req.params.id}-prediction`,
-    }
-
-    machinelearning.deleteBatchPrediction(params, function (err, data) {
-      if (err) {
-        res
-          .status(400)
-          .json(err);
-      } else {
-        res
-          .status(200)
-          .json(data);
-      }
-    })
-  }
 }
 
  module.exports = awsController;
