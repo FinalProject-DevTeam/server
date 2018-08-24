@@ -114,6 +114,24 @@ class awsController {
     })
   }
 
+  static getEvaluationStatus(req, res) {
+    let params = {
+      EvaluationId:`${req.params.id}-evaluation`,
+    }
+
+    machinelearning.getEvaluation(params, function (err, data) {
+      if (err) {
+        res
+          .status(400)
+          .json(err);
+      } else {
+        res
+          .status(200)
+          .json(data.Status);
+      }
+    })
+  }
+
   static createNewBatchPrediction(req, res) {
     let params = {
       // BatchPredictionDataSourceId: `${req.params.id}-customers`,

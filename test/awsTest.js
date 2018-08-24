@@ -242,4 +242,21 @@ describe('AWS', function () {
       });
   })
 
+  it('should return 200 /aws/evaluation GET', function (done) {
+    chai.request(server)
+      .get('/aws/evaluation/52mSFsSFmRW4IRZr1i8acr6xWrv2')
+      .end(function (err, res) {
+        res.should.have.status(200)
+        res.should.be.a('json')
+      });
+  })
+
+  it('should return 400 /aws/evaluation GET', function (done) {
+    chai.request(server)
+      .get('/aws/evaluation/ndssand')
+      .end(function (err, res) {
+        res.should.have.status(400)
+      });
+  })
+
 });

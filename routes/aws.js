@@ -20,7 +20,9 @@ router.post('/s3', aws.uploadToS3);
 
 router.post('/evaluation', aws.createNewEvaluation);
 
-router.post('/evaluation/:id', aws.deleteEvaluation);
+router.delete('/evaluation/:id', aws.deleteEvaluation);
+
+router.get('evaluation/:id', aws.getEvaluationStatus)
 
 router.post('/datasource/', aws.createDataSource);
 
