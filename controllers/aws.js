@@ -49,7 +49,6 @@ class awsController {
         res
           .status(400)
           .json(err);
-        console.log(err);
       } else {
         zlib.unzip(data.Body, (err, buffer) => {
           if (!err) {
@@ -162,6 +161,23 @@ class awsController {
         res
           .status(200)
           .json(data)
+      }
+    })
+  }
+
+  static deleteDataSource(req, res) {
+    let params = {
+      DataSourceId: req.params.id,
+    }
+    machinelearning.deleteDataSource(params, function (err, data) {
+      if (err) {
+        res
+          .status(400)
+          .json(err);
+      } else {
+        res
+          .status(200)
+          .json(data);
       }
     })
   }
