@@ -5,6 +5,9 @@ const should = chai.should();
 
 chai.use(chaiHttp);
 
+const date = new Date();
+const today = `${date.getDate()}${date.getMonth()}${date.getFullYear()}`;
+
 describe('AWS', function () {
   this.timeout(10000);
 
@@ -30,27 +33,28 @@ describe('AWS', function () {
 
   it('should return 400 /aws/prediction/:id POST', function (done) {
     chai.request(server)
-      .post(`/aws/prediction/`)
+      .post(`/aws/prediction`)
       .end(function (err, res) {
-        res.should.have.status(400);
+        res.should.have.status(404);
         res.should.be.a('json')
       done();
     });
   });
 
-  it('should return 200 /aws/model/:id POST', function (done) {
+  it('should return 200 /aws/model POST', function (done) {
     chai.request(server)
-      .post(`/aws/model/52mSFsSFmRW4IRZr1i8acr6xWrv2`)
+      .post(`/aws/model`)
       .end(function (err, res) {
         res.should.have.status(200);
       done();
     });
   });
 
-  it('should return string and status 200 /aws/s3/:id POST', function (done) {
+  it('should return string and status 200 /aws/s3 POST', function (done) {
     chai.request(server)
-      .post(`/aws/s3/52mSFsSFmRW4IRZr1i8acr6xWrv2`)
+      .post(`/aws/s3`)
       .send({
+        "id": "52mSFsSFmRW4IRZr1i8acr6xWrv2",
         "columns": {
           "gender": "gender",
           "birthYear": "birthyear",
@@ -69,21 +73,71 @@ describe('AWS', function () {
     });
   })
 
-  it('should return 400 /aws/s3/:id POST', function (done) {
+  it('should return 400 /aws/s3 POST', function (done) {
     chai.request(server)
-      .post(`/aws/s3/52mSFsSFmRW4IRZr1i8acr6xWrv2`)
-      .send({})
+      .post(`/aws/s3`)
+      .send({"id": '"dssasasa"'})
       .end(function (err, res) {
         res.should.have.status(400);
         res.should.be.a('string');
     });
   });
 
-  it('should return 200 /aws/datasource/:id POST', function (done) {
+  it('should return 200 /aws/datasource POST', function (done) {
     chai.request(server)
-      .post(`/aws/datasource/52mSFsSFmRW4IRZr1i8acr6xWrv2`)
+      .post(`/aws/datasource/`)
+      .send({
+      	"dataName": "transactions-data",
+      	"folderName": "transactionsData"
+      })
       .end(function (err, res) {
         res.should.have.status(200);
+      })
+  })
+
+  it('should return 200 /aws/datasource POST', function (done) {
+    chai.request(server)
+      .post(`/aws/datasource/`)
+      .send({
+        "dataName": "customers-data",
+        "folderName": "customersData",
+        "id": "jsjajsaksjk"
+      })
+      .end(function (err, res) {
+        res.should.have.status(200);
+      })
+  })
+
+  it('should return 400 /aws/datasource POST', function (done) {
+    chai.request(server)
+      .post(`/aws/datasource/`)
+      .end(function (err, res) {
+        res.should.have.status(200);
+      })
+  })
+
+  it(`should return 200 /aws/datasource DELETE`, function (done) {
+    chai.request(server)
+      .delete(`/aws/datasource/52mSFsSFmRW4IRZr1i8acr6xWrv2`)
+      .end(function (err, res) {
+        res.should.have.status(200);
+      })
+  })
+
+  it(`should return 400 /aws/datasource DELETE`, function (done) {
+    chai.request(server)
+      .delete(`/aws/datasource/dsnsadnjnsadjnnjdsa`)
+      .end(function (err, res) {
+        res.should.have.status(400);
+      })
+  })
+
+  it('should return 200 /aws/evaluation POST', function (done) {
+    chai.request(server)
+      .delete('/aws/evaluation')
+      .end(function (err, res) {
+        res.should.have.status(200)
+        res.should.be.a('string')
       })
   })
 
