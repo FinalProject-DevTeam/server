@@ -6,14 +6,36 @@ const { stringify, parse } = require('csv');
 const customersDataSchema = require('../aws/schemas/customersDataSchema.json');
 const transactionsDataSchema = require('../aws/schemas/transactionsDataSchema.json');
 
+const date = new Date();
+const today = date.getDate();
+console.log(today);
+
 AWS.config.loadFromPath('./awsConfig.json');
 
 const s3 = new AWS.S3({apiVersion: '2006-03-01'});
 const machinelearning = new AWS.MachineLearning({apiVersion: '2014-12-12'});
 
 class awsController {
-  static async trainNewModel(req, res) {
-    console.log('trainNewModel');
+  static trainNewModel(req, res) {
+    let params = {
+      MLModelId: `${today}-model`,
+      MLModelType: `MULTICLASS`,
+      TrainingDataSourceId: 'ds-OQa4pocoDQH',
+      // TrainingDataSourceId: `${today}-transactions`
+      MLModelName: `Model: ${today}`,
+    }
+
+    machinelearning.createMLModel(params, function (err, data) {
+      if (err) {
+        res
+          .status(400)
+          .json(err);
+      } else {
+        res
+          .status(200)
+          .json(data);
+      }
+    })
   }
 
   static createNewBatchPrediction(req, res) {
@@ -135,22 +157,39 @@ class awsController {
     let schemaPath = `../aws/schemas/${folderName}Schema.json`
     let schema = require(schemaPath);
     var computeStatisticsBool;
+    var params;
 
     if (dataName === 'transactions-data') {
       computeStatisticsBool = true;
+      params = {
+        DataSourceId: `${today}-datasource`,
+        DataSpec: {
+          DataLocationS3: awsS3location,
+          DataSchema: JSON.stringify(schema),
+        },
+        ComputeStatistics: computeStatisticsBool,
+        DataSourceName: ` ${dataName}: ${req.params.id}`,
+      }
     } else {
       computeStatisticsBool = false;
+      params = {
+        DataSourceId: `${req.params.id}-datasource`,
+        DataSpec: {
+          DataLocationS3: awsS3location,
+          DataSchema: JSON.stringify(schema),
+        },
+        ComputeStatistics: computeStatisticsBool,
+        DataSourceName: ` ${dataName}: ${req.params.id}`,
+      }
     }
 
-    let params = {
-      DataSourceId: `${req.params.id}-datasource`,
-      DataSpec: {
-        DataLocationS3: awsS3location,
-        DataSchema: JSON.stringify(schema),
-      },
-      ComputeStatistics: computeStatisticsBool,
-      DataSourceName: ` ${dataName}: ${req.params.id}`,
+    if (dataName === 'transactions-data') {
+
+    } else {
+
     }
+
+
 
     machinelearning.createDataSourceFromS3(params, function (err, data) {
       if (err) {
