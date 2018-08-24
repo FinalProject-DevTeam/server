@@ -12,4 +12,6 @@ router.post('/s3/:id', aws.uploadToS3);
 
 router.post('/datasource/:id', aws.createDataSource);
 
+router.delete('/datasource/:id', aws.deleteDataSource);
+
 module.exports = router;
