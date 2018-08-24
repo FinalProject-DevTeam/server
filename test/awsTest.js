@@ -8,7 +8,7 @@ chai.use(chaiHttp);
 describe('AWS', function () {
   this.timeout(10000);
 
-  it('should list all index of customers with a predicted food preference which is equal to the one provided /aws/prediction/:id GET', function (done) {
+  it('should return array /aws/prediction/:id GET', function (done) {
     chai.request(server)
       .get(`/aws/prediction/52mSFsSFmRW4IRZr1i8acr6xWrv2`)
       .end(function (err, res) {
@@ -23,6 +23,7 @@ describe('AWS', function () {
       .post(`/aws/prediction/52mSFsSFmRW4IRZr1i8acr6xWrv2`)
       .end(function (err, res) {
         res.should.have.status(200);
+        res.should.be.a('json')
       done();
     });
   });
@@ -36,5 +37,23 @@ describe('AWS', function () {
     });
   });
 
+  it('should return 200 /aws/model/:id POST', function (done) {
+    chai.request(server)
+      .post(`/aws/model/52mSFsSFmRW4IRZr1i8acr6xWrv2`)
+      .send({
+        columns: {
+          gender: 'gender',
+          birthYear: 'birthYear',
+          occupation: 'occupation',
+        },
+        csvData: [
+          [1, 2000, 'Teacher'],
+          [0, 1980, 'Student'],
+        ]
+      })
+    .end(function (err, res) {
+      res.should.have.status(200);
+    });
+  })
 
 });
