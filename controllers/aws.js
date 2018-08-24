@@ -1,8 +1,7 @@
 const AWS = require('aws-sdk');
 const fs = require('fs');
 const zlib = require('zlib');
-const csv = require('csv');
-let parse = csv.parse;
+const { stringify, parse } = require('csv');
 
 const customersDataSchema = require('../aws/schemas/customersDataSchema.json');
 const transactionsDataSchema = require('../aws/schemas/transactionsDataSchema.json');
@@ -78,6 +77,10 @@ class awsController {
         })
       }
     });
+  }
+
+  static uploadToS3(req, res) {
+    imp
   }
 }
 
