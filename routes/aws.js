@@ -12,6 +12,8 @@ router.post('/model', aws.trainNewModel);
 
 router.delete('/model/:id', aws.deleteModel);
 
+router.get('/model/:id', aws.getModelStatus);
+
 router.post('/s3', aws.uploadToS3);
 
 router.post('/evaluation', aws.createNewEvaluation);

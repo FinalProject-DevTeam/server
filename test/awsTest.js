@@ -70,7 +70,7 @@ describe('AWS', function () {
     chai.request(server)
       .delete('/aws/model/01022018')
       .end(function (err, res) {
-        res.shoul.have.status(200);
+        res.should.have.status(200);
       })
   })
 
@@ -78,8 +78,25 @@ describe('AWS', function () {
     chai.request(server)
       .delete('/aws/model/')
       .end(function (err, res) {
-        res.shoul.have.status(400);
+        res.should.have.status(400);
       })
+  })
+
+  it(`should return 200 /aws/model GET`, function (done) {
+    chai.request(server)
+      .get('/aws/model/01022018')
+      .end(function (err, res) {
+        res.should.have.status(200)
+        res.should.be.a('json')
+      });
+  })
+
+  it('should return 400 /aws/model GET', function (done) {
+    chai.request(server)
+      .get('/aws/model/ ')
+      .end(function (err, res) {
+        res.should.have.status(400);
+      });
   })
 
   it('should return string and status 200 /aws/s3 POST', function (done) {

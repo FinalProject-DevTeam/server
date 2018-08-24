@@ -57,6 +57,24 @@ class awsController {
     })
   }
 
+  static getModelStatus(req, res) {
+    let params = {
+      MLModelId: `${req.params.id}-model`
+    }
+
+    machinelearning.getBatchPrediction(params, function (err, data) {
+      if (err) {
+        res
+          .status(400)
+          .json(err)
+      } else {
+        res
+          .status(200)
+          .json(data.Status)
+      }
+    });
+  }
+
   static createNewEvaluation(req, res) {
     let params = {
       EvaluationDataSourceId: `${today}-datasource`,
