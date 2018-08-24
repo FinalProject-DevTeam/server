@@ -6,6 +6,7 @@ admin.initializeApp({
   databaseURL: process.env.DATABASEURL
 });
 
+
 var db = admin.firestore();
 const settings = {/* your settings... */ timestampsInSnapshots: true};
 db.settings(settings);
@@ -44,7 +45,7 @@ class CustomerController {
       createdAt: moment().format('LLL'),
       updatedAt: moment().format('LLL')
     }
-    
+
     db
       .collection('customers')
       .add(customerData)
@@ -54,7 +55,7 @@ class CustomerController {
       .json({
         msg: 'Data successfully added',
         data: customerData
-      })    
+      })
 
   }
 
@@ -63,7 +64,7 @@ class CustomerController {
       .collection('customers')
       .where('restaurantId', '==', req.headers.uid)
       .get()
-    
+
     .then((snapshot) => {
       let dataCustomers = [];
       snapshot.forEach((doc) => {
@@ -167,7 +168,7 @@ class CustomerController {
           data: req.params.id
         })
     })
-    
+
     .catch( err => {
       res
         .status(500)

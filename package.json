@@ -8,6 +8,7 @@
     "test": "nyc mocha"
   },
   "dependencies": {
+    "@sendgrid/mail": "^6.3.1",
     "aws-sdk": "^2.299.0",
     "axios": "^0.18.0",
     "cookie-parser": "~1.4.3",
