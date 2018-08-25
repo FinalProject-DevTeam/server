@@ -22,7 +22,7 @@ class awsController {
       MLModelId: `${today}-model`,
       MLModelType: `MULTICLASS`,
       // TrainingDataSourceId: 'ds-OQa4pocoDQH',
-      TrainingDataSourceId: `${today}-transactions`,
+      TrainingDataSourceId: `${today}-datasource`,
       MLModelName: `Model: ${today}`,
     }
 
@@ -62,7 +62,7 @@ class awsController {
       MLModelId: `${req.params.id}-model`
     }
 
-    machinelearning.getBatchPrediction(params, function (err, data) {
+    machinelearning.getMLModel(params, function (err, data) {
       if (err) {
         res
           .status(400)
@@ -90,7 +90,7 @@ class awsController {
           .json(err)
       } else {
         res
-          .status
+          .status(200)
           .json(data)
       }
     })
@@ -134,16 +134,16 @@ class awsController {
 
   static createNewBatchPrediction(req, res) {
     let params = {
-      // BatchPredictionDataSourceId: `${req.params.id}-customers`,
-      BatchPredictionDataSourceId: `ds-Jp5odzEcyyo`,
+      BatchPredictionDataSourceId: `${req.params.id}-${today}-datasource`,
       BatchPredictionId: `${req.params.id}-${today}-prediction`,
-      // MLModelId: `${req.params.id}-model`,
-      MLModelId: `ml-DO70VGo3UPt`,
+      MLModelId: `${today}-model`,
       OutputUri: `s3://aws-ml-tutorial-final-project-explore/`,
       BatchPredictionName: `Batch prediction: ${req.params.id} ${today}`,
     }
+    // console.log(params);
     machinelearning.createBatchPrediction(params, function (err, data) {
       if (err) {
+        console.log(err);
         res
           .status(400)
           .json(err);
@@ -214,7 +214,7 @@ class awsController {
 
   static getPredictionStatus(req, res) {
     let params = {
-      BatchPredictionId: `${req.params.id}-prediction`,
+      BatchPredictionId: `${req.params.id}-${today}-prediction`,
     }
 
     machinelearning.getBatchPrediction(params, function (err, data) {
