@@ -40,6 +40,39 @@ class TransactionController {
       })
   }
 
+  static listAllTransactions (req, res) {
+    db
+      .collection('transactions')
+      .get()
+    
+    .then((snapshot) => {
+
+      let dataAllCustomers = [];
+      snapshot.forEach((doc) => {
+        console.log(doc.id, '=>', doc.data())
+        let objCustomer = doc.data();
+        objCustomer.id = doc.id;
+        dataAllCustomers.push(objCustomer)
+      });
+      res
+        .status(200)
+        .json({
+          msg: "This is your customers",
+          data: dataAllCustomers
+        })
+    })
+
+    .catch((err) => {
+      res
+        .status(500)
+        .json({
+          msg: "Internal Server Error",
+          data: `${err.message} + gagal`
+        })
+    });
+  }
+
+
   static listTransactions (req, res) {
     db
       .collection('transactions')

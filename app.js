@@ -13,6 +13,8 @@ const transactionRouter = require('./routes/firebasetransaction');
 const EmailPromo = require('./routes/emailpromo')
 const SMSPromo = require('./routes/smspromo')
 const awsRouter = require('./routes/aws');
+const populateRouter = require('./routes/populate');
+
 const app = express();
 
 app.use(cors());
@@ -34,6 +36,7 @@ app.use('/transaction', transactionRouter);
 app.use('/emailpromo', EmailPromo)
 app.use('/smspromo', SMSPromo)
 app.use('/aws', awsRouter);
+app.use('/populate', populateRouter)
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
