@@ -16,9 +16,9 @@ describe('Transactions', function() {
     chai.request(server)
       .post('/transaction')
       .send({
-        restaurantId: "12345",
-        customerId: "1234",
-        itemsOrdered: ['Fried Chicken', 'Indomie']
+        restaurantId: "WyEP0111rVUlmESeZyX5Z2bxgrh1",
+        customerId: "Briy8EfixCqMUiLhF0It",
+        itemsOrdered: ['Nasi Goreng', 'Udang Goreng']
       })
       .end(function(err, res){
         res.should.have.status(200);
@@ -37,7 +37,7 @@ describe('Transactions', function() {
     this.timeout(10000)
     chai.request(server)
       .get('/transaction')
-      .set('uid', '12345')
+      .set('uid', 'WyEP0111rVUlmESeZyX5Z2bxgrh1')
       .end(function(err, res){
           res.should.have.status(200);
           res.body.data.should.be.a('array');
@@ -66,9 +66,8 @@ describe('Transactions', function() {
 
   it('should list specific transaction with specific owner /transaction/<id> GET', function(done) {
     chai.request(server)
-      .get(`/transaction/sWSMne2m3XTW0oFm3AkW`)
+      .get(`/transaction/zl1sMl0Ha8mumf3MGnol`)
       .end(function(err, res){
-        // console.log(res.body)
           res.should.have.status(200);
           res.body.should.have.property('msg');
           res.body.should.have.property('data');
@@ -83,7 +82,7 @@ describe('Transactions', function() {
 
   it('should return 500 /transaction/<id> GET', function(done) {
     chai.request(server)
-      .get(`/transaction/sWSMne2m3XTW0oFm3Ak`)
+      .get(`/transaction/zl1sMl0Ha8mumf3MGnol`)
       .end(function(err, res){
         // console.log(res.body)
           res.should.have.status(500);
@@ -96,11 +95,11 @@ describe('Transactions', function() {
 
   it('should update transaction attribute on /transaction/<id> PUT', function(done) {
     chai.request(server)
-      .put(`/transaction/sWSMne2m3XTW0oFm3AkW`)
+      .put(`/transaction/zl1sMl0Ha8mumf3MGnol`)
       .send({
-        restaurantId: "12345",
-        customerId: "1234",
-        itemsOrdered: ['Hainan Rice', 'Indomie'],
+        restaurantId: "WyEP0111rVUlmESeZyX5Z2bxgrh1",
+        customerId: "Briy8EfixCqMUiLhF0It",
+        itemsOrdered: ['Nasi Goreng', 'Sate'],
         createdAt: moment().format('LLL')
       })
       .end(function(error, res){
@@ -118,11 +117,11 @@ describe('Transactions', function() {
 
   it('should return 500 /transaction/<id> PUT', function(done) {
     chai.request(server)
-      .put(`/transaction/sWSMne2m3XTW0oFm3Ak`)
+      .put(`/transaction/zl1sMl0Ha8mumf3MGno`)
       .send({
-        restaurantId: "12345",
-        customerId: "1234",
-        itemsOrdered: ['French Fries', 'Indomie'],
+        restaurantId: "WyEP0111rVUlmESeZyX5Z2bxgrh1",
+        customerId: "Briy8EfixCqMUiLhF0It",
+        itemsOrdered: ['Nasi Goreng', 'Sate'],
         createdAt: moment().format('LLL')
       })
       .end(function(error, res){
@@ -136,7 +135,7 @@ describe('Transactions', function() {
 
   it('should delete a SINGLE transaction on /transaction/<id> DELETE', function(done) {
     chai.request(server)
-      .delete(`/transaction/FDB0aVkb48lwZvCWbkPu`)
+      .delete(`/transaction/ws1JEurVElrEHb3u4nK5`)
       .end(function(error, res){
         res.should.have.status(200);
         res.should.be.json;

@@ -12,14 +12,15 @@ describe('Customer', function() {
     chai.request(server)
       .post(`/customer`)
       .send({
-        name: "joko wow",
-        gender: "male",
-        email: "jokowow@mail.com",
+        name: "Djoko Santoso",
+        gender: "Male",
+        email: "djoksan@mail.com",
         phoneNumber: "+628353456778",
-        birthYear: "1990",
-        occupation: "police",
-        restaurantId: "12345",
+        birthYear: "1993",
+        occupation: "CEO",
+        restaurantId: "WyEP0111rVUlmESeZyX5Z2bxgrh1",
         createdAt: moment().format('LLL'),
+        updatedAt: moment().format('LLL'),
       })
       .end(function(error, res){
         res.should.have.status(200);
@@ -31,6 +32,8 @@ describe('Customer', function() {
         res.body.data.should.have.property('phoneNumber');
         res.body.data.should.have.property('occupation');
         res.body.data.should.have.property('restaurantId');
+        res.body.data.should.have.property('createdAt');
+        res.body.data.should.have.property('updatedAt');
         done();
     });
   });
@@ -53,6 +56,8 @@ describe('Customer', function() {
           res.body.data[0].should.have.property('phoneNumber');
           res.body.data[0].should.have.property('occupation');
           res.body.data[0].should.have.property('restaurantId');
+          res.body.data[0].should.have.property('createdAt');
+          res.body.data[0].should.have.property('updatedAt');
         done();
       });
   });
@@ -62,7 +67,6 @@ describe('Customer', function() {
     chai.request(server)
       .get('/customer')
       .end(function(err, res){
-          // console.log(res.body)
           res.should.have.status(500);
           res.body.should.be.a('object');
           res.body.should.have.property('msg');
@@ -88,6 +92,8 @@ describe('Customer', function() {
           res.body.data.should.have.property('phoneNumber');
           res.body.data.should.have.property('occupation');
           res.body.data.should.have.property('restaurantId');
+          res.body.data.should.have.property('createdAt');
+          res.body.data.should.have.property('updatedAt');
         done();
       });
   });
@@ -111,14 +117,15 @@ describe('Customer', function() {
     chai.request(server)
       .put(`/customer/4e80ovTypW9xzXxLwRLV`)
       .send({
-        name: "joko wow",
-        gender: "male",
-        email: "jokowow@mail.com",
+        name: "Djoko Santoso",
+        gender: "Male",
+        email: "djoksan@mail.com",
         phoneNumber: "+628353456778",
-        birthYear: "1990",
-        occupation: "police",
-        restaurantId: "12345",
+        birthYear: "1993",
+        occupation: "CFO",
+        restaurantId: "WyEP0111rVUlmESeZyX5Z2bxgrh1",
         createdAt: moment().format('LLL'),
+        updatedAt: moment().format('LLL'),
       })
       .end(function(error, res){
         res.should.have.status(200);
@@ -130,6 +137,8 @@ describe('Customer', function() {
         res.body.data.should.have.property('phoneNumber');
         res.body.data.should.have.property('occupation');
         res.body.data.should.have.property('restaurantId');
+        res.body.data.should.have.property('createdAt');
+        res.body.data.should.have.property('updatedAt');
         done();
     });
   });
@@ -139,14 +148,15 @@ describe('Customer', function() {
     chai.request(server)
       .put(`/customer/0b1Dv8yTGrenODzOXJd0`)
       .send({
-        name: "johnny",
-        gender: "male",
-        email: "johny@mail.com",
-        phoneNumber: "+628123456778",
-        birthYear: "1995",
-        occupation: "student",
-        restaurantId: "12345",
+        name: "Djoko Santoso",
+        gender: "Male",
+        email: "djoksan@mail.com",
+        phoneNumber: "+628353456778",
+        birthYear: "1993",
+        occupation: "CFO",
+        restaurantId: "WyEP0111rVUlmESeZyX5Z2bxgrh1",
         createdAt: moment().format('LLL'),
+        updatedAt: moment().format('LLL'),
       })
       .end(function(error, res){
         res.should.have.status(500);
