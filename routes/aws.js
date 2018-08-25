@@ -24,7 +24,7 @@ router.delete('/evaluation/:id', aws.deleteEvaluation);
 
 router.get('evaluation/:id', aws.getEvaluationStatus)
 
-router.post('/datasource/', aws.createDataSource);
+router.post('/datasource', aws.createDataSource);
 
 router.delete('/datasource/:id', aws.deleteDataSource);
 
