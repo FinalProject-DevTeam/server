@@ -22,7 +22,7 @@ class awsController {
       MLModelId: `${today}-model`,
       MLModelType: `MULTICLASS`,
       // TrainingDataSourceId: 'ds-OQa4pocoDQH',
-      TrainingDataSourceId: `${today}-transactions`
+      TrainingDataSourceId: `${today}-transactions`,
       MLModelName: `Model: ${today}`,
     }
 
