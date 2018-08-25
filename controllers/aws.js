@@ -136,11 +136,11 @@ class awsController {
     let params = {
       // BatchPredictionDataSourceId: `${req.params.id}-customers`,
       BatchPredictionDataSourceId: `ds-Jp5odzEcyyo`,
-      BatchPredictionId: `${req.params.id}-prediction`,
+      BatchPredictionId: `${req.params.id}-${today}-prediction`,
       // MLModelId: `${req.params.id}-model`,
       MLModelId: `ml-DO70VGo3UPt`,
       OutputUri: `s3://aws-ml-tutorial-final-project-explore/`,
-      BatchPredictionName: `Batch prediction: ${req.params.id}`,
+      BatchPredictionName: `Batch prediction: ${req.params.id} ${today}`,
     }
     machinelearning.createBatchPrediction(params, function (err, data) {
       if (err) {
@@ -158,7 +158,7 @@ class awsController {
   static getPrediction(req, res) {
     let params = {
       Bucket: 'aws-ml-tutorial-final-project-explore',
-      Key: `batch-prediction/result/${req.params.id}-prediction.csv.gz`,
+      Key: `batch-prediction/result/${req.params.id}-${today}-prediction.csv.gz`,
     }
     s3.getObject(params, function (err, data) {
       if (err) {
@@ -196,7 +196,7 @@ class awsController {
 
   static deleteBatchPrediction(req, res) {
     let params = {
-      BatchPredictionId: `${req.params.id}-prediction`,
+      BatchPredictionId: `${req.params.id}-${today}-prediction`,
     }
 
     machinelearning.deleteBatchPrediction(params, function (err, data) {
@@ -241,7 +241,7 @@ class awsController {
     if (dataName === 'transactions-data') {
       filePath = `./aws/${folderName}/${today}-${dataName}.csv`
     } else {
-      filePath = `./aws/${folderName}/${id}-${dataName}.csv`
+      filePath = `./aws/${folderName}/${id}-${today}-${dataName}.csv`
     }
 
     stringify(arrData, { header: true, columns: columns }, function (err, output) {
@@ -274,7 +274,7 @@ class awsController {
                 } else {
                   params = {
                     Bucket: 'aws-ml-tutorial-final-project-explore',
-                    Key: `${folderName}/${id}-${dataName}.csv`,
+                    Key: `${folderName}/${id}-${today}-${dataName}.csv`,
                     Body: newData,
                   }
                 }
@@ -317,24 +317,25 @@ class awsController {
           DataSchema: JSON.stringify(schema),
         },
         ComputeStatistics: computeStatisticsBool,
-        DataSourceName: ` ${dataName}: ${today}`,
+        DataSourceName: `${dataName}: ${today}`,
       }
     } else {
       computeStatisticsBool = false;
-      awsS3location = `s3://aws-ml-tutorial-final-project-explore/${folderName}/${id}-${dataName}.csv`
+      awsS3location = `s3://aws-ml-tutorial-final-project-explore/${folderName}/${id}-${today}-${dataName}.csv`
       params = {
-        DataSourceId: `${id}-datasource`,
+        DataSourceId: `${id}-${today}-datasource`,
         DataSpec: {
           DataLocationS3: awsS3location,
           DataSchema: JSON.stringify(schema),
         },
         ComputeStatistics: computeStatisticsBool,
-        DataSourceName: ` ${dataName}: ${req.params.id}`,
+        DataSourceName: ` ${dataName}: ${req.body.id}-${today}`,
       }
     }
 
     machinelearning.createDataSourceFromS3(params, function (err, data) {
       if (err) {
+        console.log(err);
         res
           .status(400)
           .json(err);
@@ -348,7 +349,7 @@ class awsController {
 
   static deleteDataSource(req, res) {
     let params = {
-      DataSourceId: `${req.params.id}-datasource`,
+      DataSourceId: `${req.params.id}-${today}-datasource`,
     }
     machinelearning.deleteDataSource(params, function (err, data) {
       if (err) {
