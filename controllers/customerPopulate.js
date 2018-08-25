@@ -7,6 +7,7 @@ var db = admin.firestore();
 exports.getAllPopulate = function (req, res) {
   getPopulate()
     .then((populate) => {
+        console.log(populate)
           // console.log("All populate " + populate) 
           // All populate with its todo_items sub collection.
           return res
@@ -29,7 +30,6 @@ function getPopulate(){
           let dataTransactions = [];
           return Promise.all(
               snapshot.docs.map(doc => {  
-                
                       let transaction = doc.data();                
                       transaction.id = doc.id;
                       var transactionCustomerPromise = getCustomerById(transaction.customerId);
