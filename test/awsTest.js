@@ -151,7 +151,7 @@ describe('AWS', function () {
 
   it('should return 200 /aws/datasource POST', function (done) {
     chai.request(server)
-      .post(`/aws/datasource/`)
+      .post(`/aws/datasource`)
       .send({
       	"dataName": "transactions-data",
       	"folderName": "transactionsData"
@@ -163,7 +163,7 @@ describe('AWS', function () {
 
   it('should return 200 /aws/datasource POST', function (done) {
     chai.request(server)
-      .post(`/aws/datasource/`)
+      .post(`/aws/datasource`)
       .send({
         "dataName": "customers-data",
         "folderName": "customersData",
@@ -176,7 +176,8 @@ describe('AWS', function () {
 
   it('should return 400 /aws/datasource POST', function (done) {
     chai.request(server)
-      .post(`/aws/datasource/`)
+      .post(`/aws/datasource`)
+      .send({})
       .end(function (err, res) {
         res.should.have.status(200);
       });
@@ -191,6 +192,22 @@ describe('AWS', function () {
   })
 
   it(`should return 400 /aws/datasource DELETE`, function (done) {
+    chai.request(server)
+      .delete(`/aws/datasource/dsnsadnjnsadjnnjdsa`)
+      .end(function (err, res) {
+        res.should.have.status(400);
+      });
+  })
+
+  it(`should return 200 /aws/datasource/:id GET`, function (done) {
+    chai.request(server)
+      .delete(`/aws/datasource/${today}`)
+      .end(function (err, res) {
+        res.should.have.status(200);
+      });
+  })
+
+  it(`should return 400 /aws/datasource/:id GET`, function (done) {
     chai.request(server)
       .delete(`/aws/datasource/dsnsadnjnsadjnnjdsa`)
       .end(function (err, res) {
