@@ -21,8 +21,8 @@ class awsController {
     let params = {
       MLModelId: `${today}-model`,
       MLModelType: `MULTICLASS`,
-      TrainingDataSourceId: 'ds-OQa4pocoDQH',
-      // TrainingDataSourceId: `${today}-transactions`
+      // TrainingDataSourceId: 'ds-OQa4pocoDQH',
+      TrainingDataSourceId: `${today}-transactions`
       MLModelName: `Model: ${today}`,
     }
 
