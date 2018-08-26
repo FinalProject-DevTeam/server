@@ -42,8 +42,8 @@ class CustomerController {
       occupation: req.body.occupation,
       occupationML: newOccupation,
       restaurantId: req.body.restaurantId,
-      createdAt: new Date(),
-      updatedAt: new Date(),
+      createdAt: moment().format('LLL'),
+      updatedAt: moment().format('LLL'),
     }
 
     db
@@ -63,6 +63,37 @@ class CustomerController {
     db
       .collection('customers')
       .where('restaurantId', '==', req.headers.uid)
+      .get()
+
+    .then((snapshot) => {
+      let dataCustomers = [];
+      snapshot.forEach((doc) => {
+        let objCustomer = doc.data();
+        objCustomer.id = doc.id;
+        dataCustomers.push(objCustomer)
+      });
+      res
+        .status(200)
+        .json({
+          msg: "This is your customers",
+          data: dataCustomers
+        })
+    })
+
+    .catch((err) => {
+      res
+        .status(500)
+        .json({
+          msg: "Internal Server Error",
+          data: err.message
+        })
+    });
+  }
+
+  static listCustomerByDate (req, res) {
+    db
+      .collection('customers')
+      .orderBy('createdAt', 'asc')
       .get()
 
     .then((snapshot) => {
@@ -128,7 +159,7 @@ class CustomerController {
       occupation: req.body.occupation,
       restaurantId: req.body.restaurantId,
       createdAt: req.body.createdAt,
-      updatedAt: new Date()
+      updatedAt: moment().format('LLL'),
     }
     customerData.id = req.params.id;
 
