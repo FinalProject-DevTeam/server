@@ -19,8 +19,8 @@ describe('Customer', function() {
         birthYear: "1993",
         occupation: "CEO",
         restaurantId: "WyEP0111rVUlmESeZyX5Z2bxgrh1",
-        createdAt: moment().format('LLL'),
-        updatedAt: moment().format('LLL'),
+        createdAt: new Date(),
+        updatedAt: new Date(),
       })
       .end(function(error, res){
         res.should.have.status(200);
@@ -42,7 +42,7 @@ describe('Customer', function() {
     this.timeout(5000)
     chai.request(server)
       .get(`/customer`)
-      .set('uid', '12345')
+      .set('uid', 'WyEP0111rVUlmESeZyX5Z2bxgrh1')
       .end(function(err, res){
           res.should.have.status(200);
           res.body.should.have.property('msg');
@@ -124,8 +124,8 @@ describe('Customer', function() {
         birthYear: "1993",
         occupation: "CFO",
         restaurantId: "WyEP0111rVUlmESeZyX5Z2bxgrh1",
-        createdAt: moment().format('LLL'),
-        updatedAt: moment().format('LLL'),
+        createdAt: new Date(),
+        updatedAt: new Date(),
       })
       .end(function(error, res){
         res.should.have.status(200);
@@ -155,8 +155,8 @@ describe('Customer', function() {
         birthYear: "1993",
         occupation: "CFO",
         restaurantId: "WyEP0111rVUlmESeZyX5Z2bxgrh1",
-        createdAt: moment().format('LLL'),
-        updatedAt: moment().format('LLL'),
+        createdAt: new Date(),
+        updatedAt: new Date(),
       })
       .end(function(error, res){
         res.should.have.status(500);
