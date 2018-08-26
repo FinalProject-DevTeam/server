@@ -153,7 +153,7 @@ class CustomerController {
 
   static getDataByFood (req, res) {
     let foodFilter = req.params.food
-    
+
     if (foodFilter.indexOf('+') !== -1) {
       foodFilter = foodFilter.split('+').join(' ');
     }
@@ -177,7 +177,7 @@ class CustomerController {
             data: dataCustomers
           })
       })
-  
+
       .catch((err) => {
         res
           .status(500)
@@ -187,6 +187,45 @@ class CustomerController {
           })
       });
   }
+
+
+  static getDataPhoneNumber (req, res) {
+    let foodFilter = req.params.food
+    if (foodFilter.indexOf('+') !== -1) {
+      foodFilter = foodFilter.split('+').join(' ');
+    }
+
+    db
+      .collection('customers')
+      .where('foodfav', '==', foodFilter)
+      .get()
+
+      .then((snapshot) => {
+        let dataCustomers = [];
+        snapshot.forEach((doc) => {
+          if (doc.data().restaurantId === req.headers.uid) {
+            dataCustomers.push(doc.data().phoneNumber)
+          }
+        });
+        res
+          .status(200)
+          .json({
+            msg: "This is your customers with specific food by phone number",
+            data: dataCustomers
+          })
+      })
+
+      .catch((err) => {
+        res
+          .status(500)
+          .json({
+            msg: "Internal Server Error",
+            data: err.message
+          })
+      });
+  }
+
+
 
   static updateCustomer (req, res) {
     let customerData = {
@@ -260,7 +299,7 @@ class CustomerController {
     }
 
     console.log("hasil", req.body.id, customerData)
-    
+
     db
       .collection('customers')
       .doc(req.body.id)
@@ -283,7 +322,7 @@ class CustomerController {
         })
       });
 
-    
+
   }
 
   static deleteCustomer (req, res) {
