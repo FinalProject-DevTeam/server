@@ -24,8 +24,8 @@ class TransactionController {
       customerId: req.body.customerId,
       itemsOrdered: menus,
       itemsOrderedML: menusmc,
-      createdAt: new Date(),
-      updatedAt: new Date(),
+      createdAt: moment().format('LLL'),
+      updatedAt: moment().format('LLL'),
     }
 
     db
@@ -49,7 +49,7 @@ class TransactionController {
 
       let dataAllCustomers = [];
       snapshot.forEach((doc) => {
-        console.log(doc.id, '=>', doc.data())
+        // console.log(doc.id, '=>', doc.data())
         let objCustomer = doc.data();
         objCustomer.id = doc.id;
         dataAllCustomers.push(objCustomer)
@@ -154,7 +154,7 @@ class TransactionController {
       itemsOrdered: menus,
       itemsOrderedML: menusmc,
       createdAt: req.body.createdAt,
-      updatedAt: new Date(),
+      updatedAt: moment().format('LLL'),
     }
 
     db

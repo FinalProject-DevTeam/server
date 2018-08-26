@@ -19,8 +19,8 @@ describe('Customer', function() {
         birthYear: "1993",
         occupation: "CEO",
         restaurantId: "WyEP0111rVUlmESeZyX5Z2bxgrh1",
-        createdAt: new Date(),
-        updatedAt: new Date(),
+        createdAt: moment().format('LLL'),
+        updatedAt: moment().format('LLL'),
       })
       .end(function(error, res){
         res.should.have.status(200);
@@ -124,8 +124,8 @@ describe('Customer', function() {
         birthYear: "1993",
         occupation: "CFO",
         restaurantId: "WyEP0111rVUlmESeZyX5Z2bxgrh1",
-        createdAt: new Date(),
-        updatedAt: new Date(),
+        createdAt: moment().format('LLL'),
+        updatedAt: moment().format('LLL'),
       })
       .end(function(error, res){
         res.should.have.status(200);
@@ -155,8 +155,8 @@ describe('Customer', function() {
         birthYear: "1993",
         occupation: "CFO",
         restaurantId: "WyEP0111rVUlmESeZyX5Z2bxgrh1",
-        createdAt: new Date(),
-        updatedAt: new Date(),
+        createdAt: moment().format('LLL'),
+        updatedAt: moment().format('LLL'),
       })
       .end(function(error, res){
         res.should.have.status(500);
