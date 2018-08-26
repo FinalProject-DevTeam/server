@@ -8,8 +8,10 @@ Customers
 router.post('/', firebaseCustomer.addCustomer);
 router.get('/', firebaseCustomer.listCustomer);
 router.get('/listbydate', firebaseCustomer.listCustomerByDate);
-router.get('/:id', firebaseCustomer.specificCustomer)
+router.get('/food/:food', firebaseCustomer.getDataByFood);
+router.get('/:id', firebaseCustomer.specificCustomer);
 router.put('/:id', firebaseCustomer.updateCustomer);
+router.post('/setdata/:id', firebaseCustomer.setNewCustomer);
 router.delete('/:id', firebaseCustomer.deleteCustomer);
 
 module.exports = router;
