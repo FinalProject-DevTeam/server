@@ -8,7 +8,8 @@ Customers
 router.post('/', firebaseCustomer.addCustomer);
 router.get('/', firebaseCustomer.listCustomer);
 router.get('/listbydate', firebaseCustomer.listCustomerByDate);
-router.get('/food/:food', firebaseCustomer.getDataByFood);
+router.get('/email/:food', firebaseCustomer.getDataByFood);
+router.get('/sms/:food', firebaseCustomer.getDataPhoneNumber);
 router.get('/:id', firebaseCustomer.specificCustomer);
 router.put('/:id', firebaseCustomer.updateCustomer);
 router.post('/setdata/:id', firebaseCustomer.setNewCustomer);
