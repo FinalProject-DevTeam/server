@@ -7,6 +7,7 @@ Customers
 */
 router.post('/', firebaseCustomer.addCustomer);
 router.get('/', firebaseCustomer.listCustomer);
+router.get('/listbydate', firebaseCustomer.listCustomerByDate);
 router.get('/:id', firebaseCustomer.specificCustomer)
 router.put('/:id', firebaseCustomer.updateCustomer);
 router.delete('/:id', firebaseCustomer.deleteCustomer);
