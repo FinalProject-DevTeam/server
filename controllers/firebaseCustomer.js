@@ -99,9 +99,11 @@ class CustomerController {
     .then((snapshot) => {
       let dataCustomers = [];
       snapshot.forEach((doc) => {
-        let objCustomer = doc.data();
-        objCustomer.id = doc.id;
-        dataCustomers.push(objCustomer)
+        if (doc.data().restaurantId === req.headers.uid) {
+          let objCustomer = doc.data();
+          objCustomer.id = doc.id;
+          dataCustomers.push(objCustomer)
+        }
       });
       res
         .status(200)
@@ -149,6 +151,43 @@ class CustomerController {
       });
   }
 
+  static getDataByFood (req, res) {
+    let foodFilter = req.params.food
+    
+    if (foodFilter.indexOf('+') !== -1) {
+      foodFilter = foodFilter.split('+').join(' ');
+    }
+
+    db
+      .collection('customers')
+      .where('foodfav', '==', foodFilter)
+      .get()
+
+      .then((snapshot) => {
+        let dataCustomers = [];
+        snapshot.forEach((doc) => {
+          if (doc.data().restaurantId === req.headers.uid) {
+            dataCustomers.push(doc.data().email)
+          }
+        });
+        res
+          .status(200)
+          .json({
+            msg: "This is your customers with specific food",
+            data: dataCustomers
+          })
+      })
+  
+      .catch((err) => {
+        res
+          .status(500)
+          .json({
+            msg: "Internal Server Error",
+            data: err.message
+          })
+      });
+  }
+
   static updateCustomer (req, res) {
     let customerData = {
       name: req.body.name,
@@ -183,6 +222,68 @@ class CustomerController {
             data: err.message,
         })
       })
+  }
+
+  static setNewCustomer(req, res) {
+    let binaryGender;
+
+    if (req.body.gender === "Male") {
+      binaryGender = 1;
+    }
+    else {
+      binaryGender = 0;
+    }
+
+    let newOccupation = '';
+    for (let i = 0; i < req.body.occupation.length; i++) {
+      if(req.body.occupation[i] === ' ') {
+        newOccupation += '.';
+      }
+      else {
+        newOccupation += req.body.occupation[i];
+      }
+    }
+
+    let customerData = {
+      name: req.body.name,
+      gender: req.body.gender,
+      genderML: binaryGender,
+      email: req.body.email,
+      phoneNumber: req.body.phoneNumber,
+      birthYear: req.body.birthYear,
+      occupation: req.body.occupation,
+      occupationML: newOccupation,
+      restaurantId: req.body.restaurantId,
+      foodfav: req.body.foodfav,
+      createdAt: req.body.createdAt,
+      updatedAt: moment().format('LLL'),
+    }
+
+    console.log("hasil", req.body.id, customerData)
+    
+    db
+      .collection('customers')
+      .doc(req.body.id)
+      .set(customerData)
+
+      .then(() => {
+        res
+          .status(200)
+          .json({
+            msg: 'success setdata',
+            data: customerData
+          })
+      })
+      .catch(err => {
+        res
+          .status(500)
+          .json({
+            msg: "Internal Server Error",
+            data: err.message,
+        })
+      });
+
+    
   }
 
   static deleteCustomer (req, res) {
