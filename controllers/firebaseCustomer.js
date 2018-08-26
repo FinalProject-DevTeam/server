@@ -42,8 +42,8 @@ class CustomerController {
       occupation: req.body.occupation,
       occupationML: newOccupation,
       restaurantId: req.body.restaurantId,
-      createdAt: moment().format('LLL'),
-      updatedAt: moment().format('LLL')
+      createdAt: new Date(),
+      updatedAt: new Date(),
     }
 
     db
@@ -128,7 +128,7 @@ class CustomerController {
       occupation: req.body.occupation,
       restaurantId: req.body.restaurantId,
       createdAt: req.body.createdAt,
-      updatedAt: moment().format('LLL')
+      updatedAt: new Date()
     }
     customerData.id = req.params.id;
 

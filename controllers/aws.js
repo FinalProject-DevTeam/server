@@ -156,9 +156,11 @@ class awsController {
   }
 
   static getPrediction(req, res) {
+    console.log(req.params.id)
     let params = {
       Bucket: 'aws-ml-tutorial-final-project-explore',
-      Key: `batch-prediction/result/${req.params.id}-${today}-prediction.csv.gz`,
+      // Key: `batch-prediction/result/${req.params.id}-${today}-prediction.csv.gz`,
+      Key: `batch-prediction/result/${req.params.id}-2572018-prediction.csv.gz`
     }
     s3.getObject(params, function (err, data) {
       if (err) {

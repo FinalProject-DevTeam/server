@@ -24,8 +24,8 @@ class TransactionController {
       customerId: req.body.customerId,
       itemsOrdered: menus,
       itemsOrderedML: menusmc,
-      createdAt: moment().format('LLL'),
-      updatedAt: moment().format('LLL'),
+      createdAt: new Date(),
+      updatedAt: new Date(),
     }
 
     db
@@ -154,7 +154,7 @@ class TransactionController {
       itemsOrdered: menus,
       itemsOrderedML: menusmc,
       createdAt: req.body.createdAt,
-      updatedAt: moment().format('LLL'),
+      updatedAt: new Date(),
     }
 
     db
