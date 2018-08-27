@@ -1,16 +1,16 @@
 var admin = require('firebase-admin');
 //------PRODUCTION-------
-// var serviceAccount = require('../keyfile.json');
+var serviceAccount = require('../keyfile.json');
 //------DEVELOPMENT------
-var serviceAccount = require('../keyfile-dev.json');
+// var serviceAccount = require('../keyfile-dev.json');
 var moment = require('moment');
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
   //-------PRODUCTION---------
-  // databaseURL: process.env.DATABASEURL,
+  databaseURL: process.env.DATABASEURL,
   //-------DEVELOPMENT--------
-  databaseURL: process.env.DATABASEURLDEV,
+  // databaseURL: process.env.DATABASEURLDEV,
 });
 
 
