@@ -7,19 +7,14 @@ var db = admin.firestore();
 exports.getAllPopulate = function (req, res) {
   getPopulate()
     .then((populate) => {
-        console.log(populate)
+        // console.log(populate)
           // console.log("All populate " + populate) 
           // All populate with its todo_items sub collection.
           return res
                     .status(200)
                     .json(populate);
       })
-      .catch((err) => {
-          // console.log('Error getting documents', err);
-          return res
-                    .status(500)
-                    .json({ message: "Error getting the all Todos" + err });
-      });
+
 }
 
 function getPopulate(){
@@ -40,10 +35,6 @@ function getPopulate(){
                           }) 
               })
           )
-          .then(result => {
-              return result.length > 0 ? result[result.length - 1] : [];
-          })
-
       })
 }
 

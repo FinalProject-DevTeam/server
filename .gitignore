@@ -5,6 +5,7 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 keyfile.json
+keyfile-dev.json
 awsConfig.json
 
 # Runtime data

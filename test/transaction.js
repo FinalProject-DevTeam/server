@@ -16,9 +16,9 @@ describe('Transactions', function() {
     chai.request(server)
       .post('/transaction')
       .send({
-        restaurantId: "WyEP0111rVUlmESeZyX5Z2bxgrh1",
-        customerId: "Briy8EfixCqMUiLhF0It",
-        itemsOrdered: ['Nasi Goreng', 'Udang Goreng']
+        restaurantId: "gMCpFRxvkIa3kfBiDrqUTxCRvS73",
+        customerId: "fTIk86PHIQJtgFjw89fd",
+        itemsOrdered: ['Nasi Hainan', 'Burger']
       })
       .end(function(err, res){
         res.should.have.status(200);
@@ -37,7 +37,7 @@ describe('Transactions', function() {
     this.timeout(10000)
     chai.request(server)
       .get('/transaction')
-      .set('uid', 'WyEP0111rVUlmESeZyX5Z2bxgrh1')
+      .set('uid', 'gMCpFRxvkIa3kfBiDrqUTxCRvS73')
       .end(function(err, res){
           res.should.have.status(200);
           res.body.data.should.be.a('array');
@@ -51,22 +51,9 @@ describe('Transactions', function() {
       });
   });
 
-  it('should return 500 /transaction GET', function(done) {
-    this.timeout(10000)
-    chai.request(server)
-      .get('/transaction')
-      .end(function(err, res){
-          res.should.have.status(500);
-          res.body.data.should.be.a('object');
-          res.body.should.have.property('msg');
-          res.body.should.have.property('data');
-        done();
-      });
-  });
-
   it('should list specific transaction with specific owner /transaction/<id> GET', function(done) {
     chai.request(server)
-      .get(`/transaction/zl1sMl0Ha8mumf3MGnol`)
+      .get(`/transaction/oRmAgz1tLAOUzbv0iPS8`)
       .end(function(err, res){
           res.should.have.status(200);
           res.body.should.have.property('msg');
@@ -80,26 +67,13 @@ describe('Transactions', function() {
       });
   });
 
-  it('should return 500 /transaction/<id> GET', function(done) {
-    chai.request(server)
-      .get(`/transaction/zl1sMl0Ha8mumf3MGnol`)
-      .end(function(err, res){
-        // console.log(res.body)
-          res.should.have.status(500);
-          res.body.should.have.property('msg');
-          res.body.should.have.property('data');
-          res.body.data.should.be.a('object');
-        done();
-      });
-  });
-
   it('should update transaction attribute on /transaction/<id> PUT', function(done) {
     chai.request(server)
-      .put(`/transaction/zl1sMl0Ha8mumf3MGnol`)
+      .put(`/transaction/oRmAgz1tLAOUzbv0iPS8`)
       .send({
-        restaurantId: "WyEP0111rVUlmESeZyX5Z2bxgrh1",
-        customerId: "Briy8EfixCqMUiLhF0It",
-        itemsOrdered: ['Nasi Goreng', 'Sate'],
+        restaurantId: "gMCpFRxvkIa3kfBiDrqUTxCRvS73",
+        customerId: "fTIk86PHIQJtgFjw89fd",
+        itemsOrdered: ['Nasi Hainan', 'Burger'],
         createdAt: moment().format('LLL')
       })
       .end(function(error, res){
@@ -117,11 +91,11 @@ describe('Transactions', function() {
 
   it('should return 500 /transaction/<id> PUT', function(done) {
     chai.request(server)
-      .put(`/transaction/zl1sMl0Ha8mumf3MGno`)
+      .put(`/transaction/oRmAgz1tLAOUzbv0iPS`)
       .send({
-        restaurantId: "WyEP0111rVUlmESeZyX5Z2bxgrh1",
+        restaurantId: "gMCpFRxvkIa3kfBiDrqUTxCRvS73",
         customerId: "Briy8EfixCqMUiLhF0It",
-        itemsOrdered: ['Nasi Goreng', 'Sate'],
+        itemsOrdered: ['Nasi Hainan', 'Burger'],
         createdAt: moment().format('LLL')
       })
       .end(function(error, res){
@@ -135,7 +109,7 @@ describe('Transactions', function() {
 
   it('should delete a SINGLE transaction on /transaction/<id> DELETE', function(done) {
     chai.request(server)
-      .delete(`/transaction/ws1JEurVElrEHb3u4nK5`)
+      .delete(`/transaction/oRmAgz1tLAOUzbv0`)
       .end(function(error, res){
         res.should.have.status(200);
         res.should.be.json;

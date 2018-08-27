@@ -10,17 +10,22 @@ sendEmail: function(req, res){
     subject:req.body.subject,
     text: 'text',
     html:req.body.content
-     };
+    };
 
   sgMail.sendMultiple(msg)
   .then(function(data){
     console.log('mail send successfully')
-    res.json(data)
+    res
+      .status(200)
+      .json(data)
 
   })
   .catch(function(err){
-     console.error(error.toString());
-     res.json(err)
+     console.error(err.toString());
+
+    res
+      .status(500)
+      .json(err)
   })
 }
 }

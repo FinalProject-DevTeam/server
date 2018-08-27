@@ -1,9 +1,16 @@
 var admin = require('firebase-admin');
-var serviceAccount = require('../keyfile.json');
+//------PRODUCTION-------
+// var serviceAccount = require('../keyfile.json');
+//------DEVELOPMENT------
+var serviceAccount = require('../keyfile-dev.json');
 var moment = require('moment');
+
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  databaseURL: process.env.DATABASEURL
+  //-------PRODUCTION---------
+  // databaseURL: process.env.DATABASEURL,
+  //-------DEVELOPMENT--------
+  databaseURL: process.env.DATABASEURLDEV,
 });
 
 
@@ -79,15 +86,6 @@ class CustomerController {
           data: dataCustomers
         })
     })
-
-    .catch((err) => {
-      res
-        .status(500)
-        .json({
-          msg: "Internal Server Error",
-          data: err.message
-        })
-    });
   }
 
   static listCustomerByDate (req, res) {
@@ -112,15 +110,6 @@ class CustomerController {
           data: dataCustomers
         })
     })
-
-    .catch((err) => {
-      res
-        .status(500)
-        .json({
-          msg: "Internal Server Error",
-          data: err.message
-        })
-    });
   }
 
   static specificCustomer (req, res) {
@@ -151,7 +140,7 @@ class CustomerController {
       });
   }
 
-  static getDataByFood (req, res) {
+  static getDataEmailByFood (req, res) {
     let foodFilter = req.params.food
 
     if (foodFilter.indexOf('+') !== -1) {
@@ -177,15 +166,6 @@ class CustomerController {
             data: dataCustomers
           })
       })
-
-      .catch((err) => {
-        res
-          .status(500)
-          .json({
-            msg: "Internal Server Error",
-            data: err.message
-          })
-      });
   }
 
 
@@ -215,14 +195,6 @@ class CustomerController {
           })
       })
 
-      .catch((err) => {
-        res
-          .status(500)
-          .json({
-            msg: "Internal Server Error",
-            data: err.message
-          })
-      });
   }
 
 
@@ -264,8 +236,9 @@ class CustomerController {
   }
 
   static setNewCustomer(req, res) {
-    let binaryGender;
+    console.log(req.body)
 
+    let binaryGender;
     if (req.body.gender === "Male") {
       binaryGender = 1;
     }
@@ -298,11 +271,11 @@ class CustomerController {
       updatedAt: moment().format('LLL'),
     }
 
-    console.log("hasil", req.body.id, customerData)
+    // console.log("hasil", req.body.id, customerData)
 
     db
       .collection('customers')
-      .doc(req.body.id)
+      .doc(req.params.id)
       .set(customerData)
 
       .then(() => {
@@ -313,16 +286,6 @@ class CustomerController {
             data: customerData
           })
       })
-      .catch(err => {
-        res
-          .status(500)
-          .json({
-            msg: "Internal Server Error",
-            data: err.message,
-        })
-      });
-
-
   }
 
   static deleteCustomer (req, res) {
@@ -340,14 +303,6 @@ class CustomerController {
         })
     })
 
-    .catch( err => {
-      res
-        .status(500)
-        .json({
-          msg: "Internal server error",
-          data: err.message
-        })
-    });
   }
 }
 
