@@ -15,6 +15,8 @@ exports.getAllPopulate = function (req, res) {
                     .json(populate);
       })
 
+    
+
 }
 
 function getPopulate(){
@@ -36,6 +38,10 @@ function getPopulate(){
               })
           )
       })
+
+    .then(result => {
+          return result.length > 0 ? result[result.length - 1] : [];
+    })
 }
 
 
